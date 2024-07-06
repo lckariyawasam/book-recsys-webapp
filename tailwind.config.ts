@@ -17,6 +17,13 @@ const config: Config = {
           400: "#8B6C0D",
           500: "#554208"
         },
+        secondary: {
+          DEFAULT: "#FFD700",
+          100:"#9095A1",
+          200: "#6F7787",
+          300: "#565D6D",
+          400: "#323743"
+        },
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
