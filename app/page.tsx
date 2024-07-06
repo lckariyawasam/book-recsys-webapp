@@ -2,6 +2,6 @@ import { Typography } from "@mui/material";
 
 export default function Home() {
   return (
-    <Typography>Hello Nisansa</Typography>
+    <Typography variant="h1" className="text-primary">Hello Nisansa</Typography>
   );
 }
