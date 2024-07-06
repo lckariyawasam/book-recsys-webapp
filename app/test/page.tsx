@@ -5,6 +5,7 @@ const Testing = () => {
   return (
     <>
         <CustomButton variant="secondary" >Hello</CustomButton>
+        <CustomButton variant="outline" >Hello</CustomButton>
         <CustomButton size="large" >Hello</CustomButton>
     </>
   )
