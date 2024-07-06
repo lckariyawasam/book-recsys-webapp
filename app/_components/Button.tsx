@@ -14,11 +14,11 @@ const CustomButton: React.FC<ButtonProps> = ({
   children,
   ...props
 }) => {
-    const baseClasses = 'rounded-3xl focus:outline-none focus:ring-2 transition ease-in-out duration-150';
+    const baseClasses = 'rounded-3xl focus:outline-none transition ease-in-out duration-150';
   
     const variantClasses = {
-      primary: 'bg-primary text-primary-500 hover:bg-primary-200 focus:ring-primary-300',
-      secondary: 'bg-primary-100 text-primary-400 hover:bg-primary-200 focus:ring-primary-500'
+      primary: 'bg-primary text-primary-500 hover:bg-primary-200',
+      secondary: 'bg-primary-100 text-primary-400 hover:bg-primary-200'
     };
     
     const sizeClasses = {
