@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import { StyledRoot } from "./styledRoot";
+import {Epilogue} from 'next/font/google';
+
+const epilogue = Epilogue({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "BookMatch",
@@ -12,7 +15,7 @@ export default function RootLayout(props : { children: React.ReactNode }) {
   const { children } = props;
   return (
     <html lang="en">
-      <body className="">
+      <body className={epilogue.className}>
          <AppRouterCacheProvider>
             <StyledRoot>
              {children}

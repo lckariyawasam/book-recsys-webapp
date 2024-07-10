@@ -73,7 +73,7 @@ const NavBar: React.FC = () => {
   );
 
   return (
-    <Container maxWidth="lg">
+    <Container maxWidth="xl">
       <AppBar position="static" className="bg-white">
         <Toolbar>
           {/* Left end logo */}
@@ -111,7 +111,7 @@ const NavBar: React.FC = () => {
             <>
               {/* Middle 3 links */}
               <Box
-                sx={{ display: "flex", flexGrow: 1, justifyContent: "center" }}
+                sx={{ display: "flex", flexGrow: 1, justifyContent: "center" , ml:15}}
               >
                 <Link href="/" className="mx-2  text-secondary-200">
                   Home

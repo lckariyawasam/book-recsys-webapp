@@ -14,6 +14,7 @@ const CustomButton: React.FC<ButtonProps> = ({
   size = "small",
   onClick=()=>{console.log("Button Clicked")},
   minwidth="w-24",
+  type = "button",
   children,
   ...props
 }) => {
@@ -26,7 +27,7 @@ const CustomButton: React.FC<ButtonProps> = ({
     };
     
     const sizeClasses = {
-      small: 'py-1 px-5 text-sm',
+      small: 'py-2 px-5 text-sm',
       medium: 'py-3 px-10 text-base',
       large: 'py-3 px-12 text-lg',
     };
@@ -34,7 +35,7 @@ const CustomButton: React.FC<ButtonProps> = ({
     const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${minwidth}`;
   
     return (
-      <button className={classes} onClick={onClick} {...props}>
+      <button type={type} className={classes} onClick={onClick} {...props}>
         {children}
       </button>
     );
