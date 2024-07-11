@@ -4,7 +4,7 @@ import React from 'react'
 
 const FindSimilarPage = () => {
   return (
-    <div className='px-5 md:px-10'>
+    <div className='px-5 md:px-10 mt-5 md:mt-10'>
         <section className='h-full min-h-[80vh] flex flex-col justify-start items-center space-y-16 py-10 md:py-20'>
           <div className='flex flex-col justify-center items-center space-y-5'>
             <h1 className='text-gray-700 text-3xl md:text-4xl lg:text-5xl font-bold text-center'>Tell Us What You’ve Read</h1>

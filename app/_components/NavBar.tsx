@@ -58,14 +58,14 @@ const NavBar: React.FC = () => {
     >
       <List>
         <ListItem>
-          <a href="#hero" className={activeSection === "hero" ? "text-primary-300" : "text-secondary-100"}>
+          <Link href="/marketing" className={activeSection === "hero" ? "text-primary-300" : "text-secondary-100"}>
             <Typography variant="body1">Home</Typography>
-          </a>
+          </Link>
         </ListItem>
         <ListItem>
-          <a href="#feature" className={activeSection === "feature" ? "text-primary-300" : "text-secondary-100"}>
+          <Link href="#feature" className={activeSection === "feature" ? "text-primary-300" : "text-secondary-100"}>
             <Typography variant="body1">Features</Typography>
-          </a>
+          </Link>
         </ListItem>
         <ListItem>
           <Link href="/" className="mr-3">
@@ -82,8 +82,8 @@ const NavBar: React.FC = () => {
   );
 
   return (
-    <Container maxWidth="xl">
-      <AppBar position="fixed" className="bg-white">
+    <Container maxWidth="xl" className="">
+      <AppBar position="fixed" className="bg-white border-b-2 border-gray-200">
         <Toolbar>
           <Typography
             variant="h6"
@@ -120,12 +120,12 @@ const NavBar: React.FC = () => {
               <Box
                 sx={{ display: "flex", flexGrow: 1, justifyContent: "center", ml: 12 }}
               >
-                <a href="#hero" className={`mx-2 ${activeSection === "hero" ? "text-primary-300" : "text-secondary-200"}`}>
+                <Link href="/marketing" className={`mx-2 ${activeSection === "hero" ? "text-primary-300" : "text-secondary-200"}`}>
                   Home
-                </a>
-                <a href="#feature" className={`mx-2 ${activeSection === "feature" ? "text-primary-300" : "text-secondary-200"}`}>
+                </Link>
+                <Link href="#feature" className={`mx-2 ${activeSection === "feature" ? "text-primary-300" : "text-secondary-200"}`}>
                   Features
-                </a>
+                </Link>
               </Box>
               <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "end" }}>
                 <Link href="/" className="mr-3">
