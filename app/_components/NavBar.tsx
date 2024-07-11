@@ -1,13 +1,11 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   AppBar,
   Toolbar,
   Typography,
-  // Button,
-  // Link,
   Box,
   IconButton,
   Drawer,
@@ -25,10 +23,32 @@ const NavBar: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("hero");
 
   const toggleDrawer = (open: boolean) => () => {
     setDrawerOpen(open);
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = document.querySelectorAll("section");
+      let currentSection = "hero";
+
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop;
+        if (window.scrollY >= sectionTop - 100) {
+          currentSection = section.getAttribute("id") || currentSection;
+        }
+      });
+
+      setActiveSection(currentSection);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const drawer = (
     <Box
@@ -38,25 +58,14 @@ const NavBar: React.FC = () => {
     >
       <List>
         <ListItem>
-          <Link href="/">
-            <Typography variant="body1" className="text-secondary-100">
-              Home
-            </Typography>
-          </Link>
+          <a href="#hero" className={activeSection === "hero" ? "text-primary-300" : "text-secondary-100"}>
+            <Typography variant="body1">Home</Typography>
+          </a>
         </ListItem>
         <ListItem>
-          <Link href="/">
-            <Typography variant="body1" className="text-secondary-100">
-              About
-            </Typography>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <Link href="/">
-            <Typography variant="body1" className="text-secondary-100">
-              Features
-            </Typography>
-          </Link>
+          <a href="#feature" className={activeSection === "feature" ? "text-primary-300" : "text-secondary-100"}>
+            <Typography variant="body1">Features</Typography>
+          </a>
         </ListItem>
         <ListItem>
           <Link href="/" className="mr-3">
@@ -74,9 +83,8 @@ const NavBar: React.FC = () => {
 
   return (
     <Container maxWidth="xl">
-      <AppBar position="static" className="bg-white">
+      <AppBar position="fixed" className="bg-white">
         <Toolbar>
-          {/* Left end logo */}
           <Typography
             variant="h6"
             component="div"
@@ -109,27 +117,20 @@ const NavBar: React.FC = () => {
             </>
           ) : (
             <>
-              {/* Middle 3 links */}
               <Box
-                sx={{ display: "flex", flexGrow: 1, justifyContent: "center" , ml:15}}
+                sx={{ display: "flex", flexGrow: 1, justifyContent: "center", ml: 12 }}
               >
-                <Link href="/" className="mx-2  text-secondary-200">
+                <a href="#hero" className={`mx-2 ${activeSection === "hero" ? "text-primary-300" : "text-secondary-200"}`}>
                   Home
-                </Link>
-                <Link href="/" className="mx-2  text-secondary-200">
-                  About
-                </Link>
-                <Link href="/" className="mx-2  text-secondary-200">
+                </a>
+                <a href="#feature" className={`mx-2 ${activeSection === "feature" ? "text-primary-300" : "text-secondary-200"}`}>
                   Features
-                </Link>
+                </a>
               </Box>
-
-              {/* Right end two buttons */}
               <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "end" }}>
                 <Link href="/" className="mr-3">
                   <CustomButton>Log in </CustomButton>
                 </Link>
-
                 <Link href="/">
                   <CustomButton variant="secondary">Sign up</CustomButton>
                 </Link>
