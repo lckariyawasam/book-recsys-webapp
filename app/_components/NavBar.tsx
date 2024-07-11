@@ -82,8 +82,9 @@ const NavBar: React.FC = () => {
   );
 
   return (
-    <Container maxWidth="xl" className="">
-      <AppBar position="fixed" className="bg-white border-b-2 border-gray-200">
+    <div className="bg-white border-b-2 border-gray-200">
+    <Container maxWidth='xl'>
+      <AppBar position='sticky'>
         <Toolbar>
           <Typography
             variant="h6"
@@ -140,6 +141,7 @@ const NavBar: React.FC = () => {
         </Toolbar>
       </AppBar>
     </Container>
+    </div>
   );
 };
 
