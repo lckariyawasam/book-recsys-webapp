@@ -1,23 +1,26 @@
-'use client'
+// SearchBar.tsx
 
-import { useState } from 'react';
-import CustomButton from './Button';
+import React, { useState } from 'react';
+import CustomButton from '@/app/_components/Button';
 
-const SearchBar = () => {
+interface SearchBarProps {
+  handleSubmit: (searchTerm: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Implement search functionality here
-    console.log(`Searching for: ${searchTerm}`);
+    handleSubmit(searchTerm); // Pass searchTerm to parent component
   };
 
   return (
-    <form onSubmit={handleSubmit} className='space-x-5 flex justify-center items-center'>
+    <form onSubmit={onSubmit} className='space-x-5 flex justify-center items-center'>
       <input
         type="text"
         placeholder="Search..."
