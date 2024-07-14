@@ -68,12 +68,12 @@ const NavBar: React.FC = () => {
           </Link>
         </ListItem>
         <ListItem>
-          <Link href="/" className="mr-3">
+          <Link href="/auth/signin" className="mr-3">
             <CustomButton>Log in </CustomButton>
           </Link>
         </ListItem>
         <ListItem>
-          <Link href="/">
+          <Link href="/auth/signup">
             <CustomButton variant="secondary">Sign up</CustomButton>
           </Link>
         </ListItem>
@@ -129,10 +129,10 @@ const NavBar: React.FC = () => {
                 </Link>
               </Box>
               <Box sx={{ display: "flex", flexGrow: 1, justifyContent: "end" }}>
-                <Link href="/" className="mr-3">
+                <Link href="/auth/signin" className="mr-3">
                   <CustomButton>Log in </CustomButton>
                 </Link>
-                <Link href="/">
+                <Link href="/auth/signup">
                   <CustomButton variant="secondary">Sign up</CustomButton>
                 </Link>
               </Box>

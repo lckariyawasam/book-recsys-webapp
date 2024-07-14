@@ -10,16 +10,16 @@ export default function SignInPage() {
   const handleSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     const result = await signIn('credentials', {
-      redirect: false,
       email,
       password,
+      callbackUrl:'/test'
     });
 
     if (!result?.error) {
       console.log('success', result);
 
     } else {
-      // Handle error
+      console.log('error', result.error);
     }
   };
 

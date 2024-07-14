@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 
 export default function SignUpPage() {
   const [email, setEmail] = useState('');
@@ -14,7 +15,19 @@ export default function SignUpPage() {
     try {
       const response = await axios.post('/api/auth/signup', { email, password, name });
       console.log('Sign up response:', response.data);
-      // Handle success (e.g., redirect to the sign-in page or automatically sign in)
+      // redirect to /test
+      const result = await signIn('credentials', {
+        email,
+        password,
+        callbackUrl:'/test'
+      });
+  
+      if (!result?.error) {
+        console.log('success', result);
+  
+      } else {
+        console.log('error', result.error);
+      }
     } catch (error) {
       setError(error || 'Something went wrong');
     }

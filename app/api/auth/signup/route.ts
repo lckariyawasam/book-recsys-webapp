@@ -3,7 +3,6 @@ import { hashPassword } from '@/utils/password';
 import { createUser, getUserByEmail } from '@/utils/db';
 import { signUpSchema } from '@/lib/zod';
 import { ZodError } from 'zod';
-import { signIn } from '@/auth';
 
 export async function POST(req: NextRequest) {
   try {
@@ -22,13 +21,6 @@ export async function POST(req: NextRequest) {
 
     // Create the user
     const user = await createUser({ email, password: hashedPassword, name });
-
-    // Sign in the user
-    await signIn('credentials', {
-      redirect: false,
-      email,
-      password,
-    });
 
     return NextResponse.json(user, { status: 201 }); // Created
   } catch (error) {
