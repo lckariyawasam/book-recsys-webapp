@@ -18,7 +18,7 @@ const MarketingPage = () => {
           <div className='grid grid-cols-1 md:grid-cols-2 w-full h-full gap-10 md:gap-0'>
             <div className='option1 col-span-1 md:col-span-1 flex flex-col justify-between items-center h-full md:p-10 space-y-5 md:space-y-10'>
               <h2 className='text-gray-700 text-2xl md:text-3xl lg:text-4xl font-bold text-center'>Tell Us What You’ve<br className='hidden md:block' /> Read</h2>
-              <CustomButton minwidth='w-52' size='medium'><Link href='/marketing/find-similar'>Find Similar</Link></CustomButton>
+              <CustomButton minwidth='w-52' size='medium'><Link href='/find-similar'>Find Similar</Link></CustomButton>
             </div>
             <div className='option2 col-span-1 md:col-span-1 flex flex-col justify-between items-center h-full md:p-10 space-y-5 md:space-y-10 md:border-l-2'>
               <h2 className='text-gray-700 text-2xl md:text-3xl lg:text-4xl font-bold text-center'>Get recommendations by<br className='hidden md:block' /> rating books</h2>
