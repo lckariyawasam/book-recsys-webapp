@@ -1,4 +1,3 @@
-import CustomButton from '@/app/_components/Button'
 import SearchBar from '@/app/_components/SearchBar'
 import React from 'react'
 
