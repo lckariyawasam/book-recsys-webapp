@@ -15,7 +15,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
     try {
       const response = await fetch(`/api/search?query=${query}`);
       const data = await response.json();
-      setSuggestions(data.books.map((book: { id: string, title: string }) => ({ id: book.id, title: book.title })));
+      console.log('Suggestions:', data.books);
+      setSuggestions(data.books.map((book: { bookId: string, title: string }) => ({ id: book.bookId, title: book.title })));
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     }
@@ -63,7 +64,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
             <li
               key={suggestion.id}
               className='p-2 hover:bg-gray-200 cursor-pointer'
-              onClick={() => handleSuggestionClick(suggestion.id)}
+              onClick={() => handleSuggestionClick(suggestion.id.toString())}
             >
               {suggestion.title}
             </li>

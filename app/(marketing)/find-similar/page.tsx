@@ -10,14 +10,16 @@ const FindSimilarPage = () => {
 
 
   const handleBookSelect = async (id: string, k: number) => {
+    console.log("Selected book ID:", id);
     try {
-      const response = await fetch('/api/select-book', {
+      const response = await fetch('/api/similar-books/select-book', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, k }),
       });
       const data = await response.json();
-      console.log('Similar books:', data.matches);
+      console.log('Similar books:', data);
+      setSearchResults(data)
     } catch (error) {
       console.error('Error fetching similar books:', error);
     }

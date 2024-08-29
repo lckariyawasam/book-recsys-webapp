@@ -19,10 +19,11 @@ export async function GET(req: NextRequest) {
       },
       select: {
         title: true,
+        bookId: true,
       },
       take: 10, // Limit the number of results
     });
-    console.log(books);
+    console.log('Books:', books);
     return NextResponse.json({ books });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch books' }, { status: 500 });

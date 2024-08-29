@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id, k }),
+      body: JSON.stringify({ "id" : id, "k": 5 }),
     });
 
     if (!response.ok) {
