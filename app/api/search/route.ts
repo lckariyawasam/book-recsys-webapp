@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    const books = await prisma.book.findMany({
+    const books = await prisma.books.findMany({
       where: {
         title: {
           contains: query,
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       },
       take: 10, // Limit the number of results
     });
-
+    console.log(books);
     return NextResponse.json({ books });
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch books' }, { status: 500 });

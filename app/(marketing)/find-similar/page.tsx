@@ -9,24 +9,17 @@ const FindSimilarPage = () => {
 
 
 
-  const handleSubmit = async (searchTerm: string) => {
+  const handleBookSelect = async (id: string, k: number) => {
     try {
-      const response = await fetch(`/api/find/`, {
+      const response = await fetch('/api/select-book', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ title: searchTerm, k: 5 }), // Adjust payload as per API requirements
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, k }),
       });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
       const data = await response.json();
-      setSearchResults(data); // Assuming data is an array of search results
+      console.log('Similar books:', data.matches);
     } catch (error) {
-      console.error('Error fetching search results:', error);
+      console.error('Error fetching similar books:', error);
     }
   };
 
@@ -36,7 +29,7 @@ const FindSimilarPage = () => {
         <div className='flex flex-col justify-center items-center space-y-5'>
           <h1 className='text-gray-700 text-3xl md:text-4xl lg:text-5xl font-bold text-center'>Tell Us What You’ve Read</h1>
           <p className='text-gray-500 text-lg md:text-xl font-semibold text-center'>Add books you have read and loved. The more you add, the better we can recommend.</p>
-          <SearchBar handleSubmit={handleSubmit} />
+          <SearchBar handleSubmit={handleBookSelect} />
           
           {/* Display search results */}
           {searchResults.length > 0 && (

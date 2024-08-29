@@ -1,20 +1,21 @@
+// components/SearchBar.tsx
 import React, { useState, useEffect } from 'react';
 import CustomButton from '@/app/_components/Button';
 
 interface SearchBarProps {
-  handleSubmit: (searchTerm: string) => void;
+  handleSubmit: (id: string, k: number) => void;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<{ id: string, title: string }[]>([]);
 
   const fetchSuggestions = async (query: string) => {
     if (query.length < 2) return; // Minimal length for triggering search
     try {
       const response = await fetch(`/api/search?query=${query}`);
       const data = await response.json();
-      setSuggestions(data.books.map((book: { title: string }) => book.title));
+      setSuggestions(data.books.map((book: { id: string, title: string }) => ({ id: book.id, title: book.title })));
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     }
@@ -32,9 +33,16 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
     setSearchTerm(event.target.value);
   };
 
+  const handleSuggestionClick = (id: string) => {
+    const k = 5; // Example value for k, can be dynamic
+    handleSubmit(id, k); // Pass the selected book ID and k to the parent component
+    setSearchTerm(''); // Clear search term
+    setSuggestions([]); // Clear suggestions
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleSubmit(searchTerm); // Pass searchTerm to parent component
+    // You can add a default behavior here if necessary
   };
 
   return (
@@ -51,9 +59,13 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
       </form>
       {suggestions.length > 0 && (
         <ul className='bg-white border border-gray-300 rounded-lg mt-2 max-w-md mx-auto'>
-          {suggestions.map((suggestion, index) => (
-            <li key={index} className='p-2 hover:bg-gray-200 cursor-pointer'>
-              {suggestion}
+          {suggestions.map((suggestion) => (
+            <li
+              key={suggestion.id}
+              className='p-2 hover:bg-gray-200 cursor-pointer'
+              onClick={() => handleSuggestionClick(suggestion.id)}
+            >
+              {suggestion.title}
             </li>
           ))}
         </ul>
