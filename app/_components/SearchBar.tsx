@@ -15,7 +15,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
     try {
       const response = await fetch(`/api/search?query=${query}`);
       const data = await response.json();
-      console.log('Suggestions:', data.books);
       setSuggestions(data.books.map((book: { bookId: string, title: string }) => ({ id: book.bookId, title: book.title })));
     } catch (error) {
       console.error('Error fetching suggestions:', error);

@@ -42,9 +42,9 @@ const FindSimilarPage = () => {
                   <li key={index} className="mb-2">
                     {/* Display your search result data here */}
                     {/* <p className="text-gray-600">{result.id}</p> */}
-                    <p className="text-sm text-gray-500">{result.title}</p>
+                    <p className="text-sm text-gray-500">{result["Book"]}</p>
                     <p className="text-sm text-gray-500">{result.author}</p>
-                    <p className="text-sm text-gray-500">{result.score}</p>
+                    <p className="text-sm text-gray-500">{result["Avg_Rating"]}</p>
                     {/* Add more details as needed */}
                   </li>
                 ))}

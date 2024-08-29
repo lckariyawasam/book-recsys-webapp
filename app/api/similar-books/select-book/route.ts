@@ -20,9 +20,7 @@ export async function POST(request: NextRequest) {
     }
 
     const data = await response.json();
-    const matches = data.matches;
-
-    return NextResponse.json({ matches });
+    return NextResponse.json(data);
   } catch (error) {
     return NextResponse.json({ error: 'Something went wrong' }, { status: 500 });
   }
