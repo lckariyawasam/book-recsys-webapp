@@ -80,3 +80,15 @@ model Authenticator {
  
   @@unique([userId, credentialID])
 }
+
+model Books {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  title         String  @map("Book")
+  author        String  @map("Author")
+  description   String  @map("Description")
+  genres        String  @map("Genres")
+  avgRating     Float   @map("Avg_Rating")
+  numRatings    Int     @map("Num_Ratings")
+  url           String  @map("URL")
+  bookId        Int     @map("id") // You might want to use Int or String depending on your data
+}

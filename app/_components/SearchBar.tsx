@@ -1,32 +1,64 @@
-'use client'
+import React, { useState, useEffect } from 'react';
+import CustomButton from '@/app/_components/Button';
 
-import { useState } from 'react';
-import CustomButton from './Button';
+interface SearchBarProps {
+  handleSubmit: (searchTerm: string) => void;
+}
 
-const SearchBar = () => {
+const SearchBar: React.FC<SearchBarProps> = ({ handleSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+
+  const fetchSuggestions = async (query: string) => {
+    if (query.length < 2) return; // Minimal length for triggering search
+    try {
+      const response = await fetch(`/api/search?query=${query}`);
+      const data = await response.json();
+      setSuggestions(data.books.map((book: { title: string }) => book.title));
+    } catch (error) {
+      console.error('Error fetching suggestions:', error);
+    }
+  };
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      fetchSuggestions(searchTerm);
+    }, 300); // 300ms delay for debouncing
+
+    return () => clearTimeout(delayDebounceFn); // Cleanup the timeout
+  }, [searchTerm]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSubmit = (event: { preventDefault: () => void; }) => {
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // Implement search functionality here
-    console.log(`Searching for: ${searchTerm}`);
+    handleSubmit(searchTerm); // Pass searchTerm to parent component
   };
 
   return (
-    <form onSubmit={handleSubmit} className='space-x-5 flex justify-center items-center'>
-      <input
-        type="text"
-        placeholder="Search..."
-        value={searchTerm}
-        onChange={handleSearchChange}
-        className='w-full md:w-96 px-5 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition ease-in-out duration-150'
-      />
-      <CustomButton type="submit" size='medium' minwidth='68'>Search</CustomButton>
-    </form>
+    <div>
+      <form onSubmit={onSubmit} className='space-x-5 flex justify-center items-center'>
+        <input
+          type="text"
+          placeholder="Search..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+          className='w-full md:w-96 px-5 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-400 focus:border-transparent transition ease-in-out duration-150'
+        />
+        <CustomButton type="submit" size='medium' minwidth='68'>Search</CustomButton>
+      </form>
+      {suggestions.length > 0 && (
+        <ul className='bg-white border border-gray-300 rounded-lg mt-2 max-w-md mx-auto'>
+          {suggestions.map((suggestion, index) => (
+            <li key={index} className='p-2 hover:bg-gray-200 cursor-pointer'>
+              {suggestion}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 
