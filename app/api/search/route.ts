@@ -1,3 +1,5 @@
+// /api/search?query=book
+
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/prisma/prisma_client'
 
@@ -20,6 +22,9 @@ export async function GET(req: NextRequest) {
       select: {
         title: true,
         bookId: true,
+        author: true,
+        avgRating: true,
+        genres: true,
       },
       take: 10, // Limit the number of results
     });

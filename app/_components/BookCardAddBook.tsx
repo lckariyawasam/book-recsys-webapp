@@ -23,7 +23,7 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, rati
   const getRandomColor = () => genreColors[Math.floor(Math.random() * genreColors.length)];
 
   return (
-    <div className="bg-yellow-50 p-4 shadow-lg flex flex-col sm:flex-row items-center py-5 mx-auto rounded-md">
+    <div className="bg-yellow-50 p-4 shadow-lg flex flex-col max-w-2xl sm:flex-row items-center py-5 mx-auto rounded-md">
       {/* {coverUrl && (
         <div className="flex-shrink-0 mb-4 sm:mb-0">
           <Image src={coverUrl} alt={title} width={100} height={150} className="rounded-md" unoptimized />
@@ -32,7 +32,7 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, rati
       <div className="sm:ml-6 w-full text-center sm:text-left">
         <h2 className="text-2xl font-semibold text-gray-900">{title}</h2>
         <h3 className="text-lg text-gray-600">{author}</h3>
-        <div className="flex justify-center sm:justify-start items-center mt-2">
+        {/* {<div className="flex justify-center sm:justify-start items-center mt-2">
           {Array.from({ length: 5 }, (_, i) => (
             <svg
               key={i}
@@ -44,7 +44,7 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, rati
               <path d="M9.049 2.927a.5.5 0 01.902 0l2.034 4.118a.5.5 0 00.378.274l4.517.656a.5.5 0 01.277.852l-3.27 3.192a.5.5 0 00-.144.445l.772 4.5a.5.5 0 01-.727.527l-4.042-2.123a.5.5 0 00-.466 0l-4.042 2.123a.5.5 0 01-.727-.527l.772-4.5a.5.5 0 00-.144-.445L2.319 8.827a.5.5 0 01.277-.852l4.517-.656a.5.5 0 00.378-.274l2.034-4.118z" />
             </svg>
           ))}
-        </div>
+        </div>} */}
         <div className="flex flex-wrap justify-center sm:justify-start mt-2">
           {genres.map((genre) => (
             <span
