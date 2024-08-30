@@ -3,11 +3,10 @@
 
 import React, { useState } from 'react';
 import SearchBar from '@/app/_components/SearchBar';
+import BookCardAddBooks from '@/app/_components/BookCardAddBook'; // Import the BookCardAddBooks component
 
 const FindSimilarPage = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]); // Placeholder for search results
-
-
 
   const handleBookSelect = async (id: string, k: number) => {
     console.log("Selected book ID:", id);
@@ -19,7 +18,7 @@ const FindSimilarPage = () => {
       });
       const data = await response.json();
       console.log('Similar books:', data);
-      setSearchResults(data)
+      setSearchResults(data);
     } catch (error) {
       console.error('Error fetching similar books:', error);
     }
@@ -35,19 +34,25 @@ const FindSimilarPage = () => {
           
           {/* Display search results */}
           {searchResults.length > 0 && (
-            <div className="mt-4 w-full md:w-96 border border-gray-300 rounded-lg p-4">
+            <div className="mt-4 min-w-full md:w-96 border border-gray-300 rounded-lg p-4 px-8">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">Search Results</h2>
               <ul>
-                {searchResults.map((result, index) => (
-                  <li key={index} className="mb-2">
-                    {/* Display your search result data here */}
-                    {/* <p className="text-gray-600">{result.id}</p> */}
-                    <p className="text-sm text-gray-500">{result["Book"]}</p>
-                    <p className="text-sm text-gray-500">{result.author}</p>
-                    <p className="text-sm text-gray-500">{result["Avg_Rating"]}</p>
-                    {/* Add more details as needed */}
-                  </li>
-                ))}
+                {searchResults.map((result, index) => {
+                  // Convert the genres string to an array
+                  const genresArray = JSON.parse(result.Genres.replace(/'/g, '"'));
+
+                  return (
+                    <li key={index} className="mb-4">
+                      <BookCardAddBooks
+                        title={result["Book"]}
+                        author={result.Author}
+                        rating={result["Avg_Rating"]}
+                        genres={genresArray} // Pass the parsed genres array
+                        coverUrl={result.URL} // Assuming this URL is the cover image
+                      />
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
