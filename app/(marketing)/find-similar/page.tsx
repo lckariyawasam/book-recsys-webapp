@@ -5,6 +5,21 @@ import React, { useState } from 'react';
 import SearchBar from '@/app/_components/SearchBar';
 import BookCardAddBooks from '@/app/_components/BookCardAddBook'; // Import the BookCardAddBooks component
 
+const normalizeJsonString = (str:String) => {
+  // Replace escaped double quotes with single quotes
+  const replacedStr = str.replace(/\\"/g, "'");
+
+  // Replace single quotes with escaped single quotes
+  const escapedSingleQuotes = replacedStr.replace(/'s/g, "\\'s");
+
+  // Replace the remaining single quotes with double quotes for JSON parsing
+  const jsonString = escapedSingleQuotes.replace(/'/g, '"');
+
+  return jsonString;
+};
+
+
+
 const FindSimilarPage = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]); // Placeholder for search results
 
@@ -39,16 +54,25 @@ const FindSimilarPage = () => {
               <ul>
                 {searchResults.map((result, index) => {
                   // Convert the genres string to an array
-                  const genresArray = JSON.parse(result.Genres.replace(/'/g, '"'));
+                  if (result.categories == "Unknown") {
+                    result.categories = "[]";
+                  }
+                  if (result.authors == "Unknown") {
+                    result.authors = "[]";
+                  }
+                  const genresArray = JSON.parse(normalizeJsonString(result.categories));
+                  const authorsArray = JSON.parse(normalizeJsonString(result.authors));
 
                   return (
                     <li key={index} className="mb-4">
                       <BookCardAddBooks
-                        title={result["Book"]}
-                        author={result.Author}
-                        rating={result["Avg_Rating"]}
+                        title={result["Title"]}
+                        author={authorsArray}
+                        description={result.description}
                         genres={genresArray} // Pass the parsed genres array
-                        coverUrl={result.URL} // Assuming this URL is the cover image
+                        coverUrl={result.image} // Assuming this URL is the cover image
+                        previewLink={result.previewLink} // Pass the preview
+                        score={result.score} // Pass the score
                       />
                     </li>
                   );

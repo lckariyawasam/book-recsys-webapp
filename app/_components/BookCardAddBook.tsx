@@ -1,15 +1,17 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface BookCardAddBooksProps {
   title: string;
   author: string;
-  rating: number;
   genres: string[];
   coverUrl: string | null;
+  description: string;
+  previewLink: string; // New prop for the preview link
+  score?: number; // Optional prop for the score
 }
 
-const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, rating, genres, coverUrl }) => {
+const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, genres, coverUrl, description, previewLink, score }) => {
   const genreColors = [
     'bg-yellow-200 text-yellow-800',
     'bg-red-200 text-red-800',
@@ -22,29 +24,33 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, rati
 
   const getRandomColor = () => genreColors[Math.floor(Math.random() * genreColors.length)];
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Truncate description to 150 characters
+  const truncatedDescription = description.length > 150 ? description.substring(0, 150) + '...' : description;
+
+  // Expand description to 300 characters
+  const expandedDescription = description.length > 300 ? description.substring(0, 300) + '...' : description;
+
   return (
-    <div className="bg-yellow-50 p-4 shadow-lg flex flex-col max-w-2xl sm:flex-row items-center py-5 mx-auto rounded-md">
-      {/* {coverUrl && (
+    <div className="bg-yellow-50 p-4 shadow-lg flex flex-col sm:flex-row items-start py-5 mx-auto rounded-md max-w-2xl">
+      {coverUrl && (
         <div className="flex-shrink-0 mb-4 sm:mb-0">
-          <Image src={coverUrl} alt={title} width={100} height={150} className="rounded-md" unoptimized />
+          <Image src={coverUrl} alt={title} width={150} height={200} className="rounded-md" unoptimized />
         </div>
-      )} */}
-      <div className="sm:ml-6 w-full text-center sm:text-left">
-        <h2 className="text-2xl font-semibold text-gray-900">{title}</h2>
-        <h3 className="text-lg text-gray-600">{author}</h3>
-        {/* {<div className="flex justify-center sm:justify-start items-center mt-2">
-          {Array.from({ length: 5 }, (_, i) => (
-            <svg
-              key={i}
-              xmlns="http://www.w3.org/2000/svg"
-              className={`h-5 w-5 ${i < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              <path d="M9.049 2.927a.5.5 0 01.902 0l2.034 4.118a.5.5 0 00.378.274l4.517.656a.5.5 0 01.277.852l-3.27 3.192a.5.5 0 00-.144.445l.772 4.5a.5.5 0 01-.727.527l-4.042-2.123a.5.5 0 00-.466 0l-4.042 2.123a.5.5 0 01-.727-.527l.772-4.5a.5.5 0 00-.144-.445L2.319 8.827a.5.5 0 01.277-.852l4.517-.656a.5.5 0 00.378-.274l2.034-4.118z" />
-            </svg>
-          ))}
-        </div>} */}
+      )}
+      <div className="sm:ml-6 w-full">
+        <div className="flex flex-col sm:flex-row justify-between items-start">
+          <div className="flex-grow text-center sm:text-left">
+            <h2 className="text-2xl font-semibold text-gray-900">{title}</h2>
+            {score !== undefined && (
+              <span className="block text-green-600 text-sm font-medium mt-1">
+                {score.toFixed(2)}
+              </span>
+            )}
+          </div>
+        </div>
+        <h3 className="text-lg text-gray-600 mt-2">{author}</h3>
         <div className="flex flex-wrap justify-center sm:justify-start mt-2">
           {genres.map((genre) => (
             <span
@@ -55,6 +61,27 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, rati
             </span>
           ))}
         </div>
+        <p className="mt-4 text-sm text-gray-700">
+          {isExpanded ? expandedDescription : truncatedDescription}
+        </p>
+        {description.length > 150 && (
+          <button
+            className="mt-2 mr-5 text-blue-400 hover:underline"
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            {isExpanded ? 'Read Less' : 'Read More'}
+          </button>
+        )}
+        {previewLink && (
+          <a
+            href={previewLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 text-blue-600 hover:underline"
+          >
+            Preview
+          </a>
+        )}
       </div>
     </div>
   );
