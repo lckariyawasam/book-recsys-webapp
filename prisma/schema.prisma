@@ -92,4 +92,5 @@ model amazonBooks {
   publisher     String? @map("publisher")
   publishedDate String? @map("publishedDate")
   bookId        Int     @map("id") // You might want to use Int or String depending on your data
+  is_ratings_available Boolean? @map("is_ratings_available")
 }

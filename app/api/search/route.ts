@@ -6,6 +6,7 @@ import prisma from '@/prisma/prisma_client'
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const query = searchParams.get('query');
+  const filterByRatings = searchParams.get('filterByRatings') === 'true'; // Get the filterByRatings parameter
 
   if (!query || query.length < 2) {
     return NextResponse.json({ error: 'Query must be at least 2 characters long' }, { status: 400 });
@@ -18,6 +19,10 @@ export async function GET(req: NextRequest) {
           contains: query,
           mode: 'insensitive',
         },
+        // Filter by ratings if the parameter is set
+        ...(filterByRatings && {
+          is_ratings_available: true
+        }),
       },
       select: {
         title: true,

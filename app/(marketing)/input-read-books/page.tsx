@@ -1,129 +1,110 @@
+// app/input-read-books/page.tsx
 'use client'
 
-import React, { useState } from "react";
-import AddBookCard from "@/app/_components/AddBookCard";
-import BookCard from "@/app/_components/BookCard";
+import React, { useState } from 'react';
+import SearchBarAddBooks from '@/app/_components/SearchBarAddBooks';
+import BookList from '@/app/_components/BookList';
+import CustomButton from '@/app/_components/Button';
+import BookCardAddBooks from '@/app/_components/BookCardAddBook';
 
-import { redirectWithParams } from '@/utils/redirectWithParams';
+const normalizeJsonString = (str:String) => {
+  // Replace escaped double quotes with single quotes
+  const replacedStr = str.replace(/\\"/g, "'");
 
-interface Book {
-  title: string;
-  bookId: string;
-  author: string;
-  avgRating?: number; // Optional
-  genres?: string;    // Optional
-  coverUrl?: string; // Optional
-}
+  // Replace single quotes with escaped single quotes
+  const escapedSingleQuotes = replacedStr.replace(/'s/g, "\\'s");
 
-const InputReadBookPage: React.FC = () => {
-  const [addedBooks, setAddedBooks] = useState<Book[]>([]);
-  const [showAddBookCard, setShowAddBookCard] = useState(true);
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  // Replace the remaining single quotes with double quotes for JSON parsing
+  const jsonString = escapedSingleQuotes.replace(/'/g, '"');
 
-  const handleAddBook = (book: Book) => {
-    setAddedBooks((prevBooks) => [...prevBooks, book]);
-    setShowAddBookCard(false); // Hide the AddBookCard component after a book is added
-  };
-
-  const handleAddAnotherBook = () => {
-    setShowAddBookCard(true); // Show the AddBookCard component when "Add Another Book" is clicked
-  };
-
-  const handleRemoveLastBook = () => {
-    setAddedBooks((prevBooks) => prevBooks.slice(0, -1));
-    if (addedBooks.length <= 1) {
-      setShowAddBookCard(true); // Show the AddBookCard if all books are removed
-    }
-  };
-
-
-const handleGetRecommendations = async () => {
-  const bookTitles = addedBooks.map(book => book.title);
-
-  try {
-    const response = await fetch('/api/get-recommendations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ titles: bookTitles }),
-    });
-
-    if (response.ok) {
-      const recommendations = await response.json();
-      console.log('Recommendations:', recommendations);
-      // Redirect to the recommendations page with the results
-      redirectWithParams('/recommendations', { recommendations });
-    } else {
-      console.error('Failed to get recommendations');
-    }
-  } catch (error) {
-    console.error('Error fetching recommendations:', error);
-  }
+  return jsonString;
 };
 
-  
+const InputReadBooksPage = () => {
+  const [addedBooks, setAddedBooks] = useState<{ id: string, title: string, author: string }[]>([]);
+  const [recommendations, setRecommendations] = useState<any[]>([]); // New state for recommendations
+
+  const handleBookAdd = (id: string, title: string, author: string) => {
+    setAddedBooks((prevBooks) => [...prevBooks, { id, title, author }]);
+  };
+
+  const handleBookRemove = (id: string) => {
+    setAddedBooks((prevBooks) => prevBooks.filter((book) => book.id !== id));
+  };
+
+  const handleGetRecommendations = async () => {
+    const bookIds = addedBooks.map(book => book.id);
+    try {
+      const response = await fetch('/api/similar-items', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: bookIds }),
+      });
+      const data = await response.json();
+      setRecommendations(data); // Store the recommendations in state
+      console.log('Recommendations:', data);
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+    }
+  };
 
   return (
-    <div className="px-5 md:px-10 mt-5 md:mt-10">
-      <section className="h-full min-h-[80vh] flex flex-col justify-start items-center space-y-16 py-10 md:py-20">
-        <div className="flex flex-col justify-center items-center space-y-5">
-          <h1 className="text-gray-700 text-3xl md:text-4xl lg:text-5xl font-bold text-center">
-            Tell Us What You've Read
-          </h1>
-          <p className="text-gray-500 text-lg md:text-xl font-semibold text-center">
-            Add books you have read and loved. The more you add, the better we can recommend.
-          </p>
+    <div className='px-5 md:px-10 mt-5 md:mt-10'>
+      <section className='h-full min-h-[80vh] flex flex-col justify-start items-center space-y-16 py-10 md:py-20'>
+        <div className='flex flex-col justify-center items-center space-y-5'>
+          <h1 className='text-gray-700 text-3xl md:text-4xl lg:text-5xl font-bold text-center'>Tell Us What You’ve Read</h1>
+          <p className='text-gray-500 text-lg md:text-xl font-semibold text-center'>Add books you have read and loved. The more you add, the better we can recommend.</p>
+          <SearchBarAddBooks handleBookAdd={handleBookAdd} />
+          
+          {/* Display added books */}
+          {addedBooks.length > 0 && (
+            <div className="mt-4 min-w-full md:w-96">
+              <BookList books={addedBooks} onRemove={handleBookRemove} />
+            </div>
+          )}
+
+          {/* Get Recommendations button */}
+          {addedBooks.length > 0 && (
+            <CustomButton type="button" onClick={handleGetRecommendations} variant='secondary' size='small' minwidth='68'>Get Recommendations</CustomButton>
+          )}
         </div>
 
-        {/* Display Added Books */}
-        <div className="flex flex-col gap-8 items-center justify-center">
-          {addedBooks.map((book, index) => {
-            return (
-              <BookCard
-                key={book.bookId}
-                title={book.title}
-                author={book.author}
-                coverUrl={book.coverUrl}
-              />
-            );
-          })}
-        </div>
+        {/* Display Recommendations */}
+        {recommendations.length > 0 && (
+          <div className='mt-8 space-y-4'>
+            <h2 className='text-gray-700 text-2xl font-bold'>Recommendations</h2>
+            <ul>
+                {recommendations.map((result, index) => {
+                  // Convert the genres string to an array
+                  if (result.categories == "Unknown") {
+                    result.categories = "[]";
+                  }
+                  if (result.authors == "Unknown") {
+                    result.authors = "[]";
+                  }
+                  const genresArray = JSON.parse(normalizeJsonString(result.categories));
+                  const authorsArray = JSON.parse(normalizeJsonString(result.authors));
 
-        {/* Conditionally Render AddBookCard Component */}
-        {showAddBookCard && <AddBookCard onAddBook={handleAddBook} />}
-
-        {/* Display Buttons */}
-        {addedBooks.length > 0 && !showAddBookCard && (
-          <div className="flex flex-row space-x-4 mt-4">
-            <button
-              className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded-full shadow-md"
-              onClick={handleAddAnotherBook}
-            >
-              Add Another Book
-            </button>
-
-            <button
-              className="bg-yellow-100 text-yellow-700 font-medium py-2 px-4 rounded-full shadow-md"
-              onClick={handleRemoveLastBook}
-            >
-              Remove Last Book
-            </button>
+                  return (
+                    <li key={index} className="mb-4">
+                      <BookCardAddBooks
+                        title={result["Title"]}
+                        author={authorsArray}
+                        description={result.description}
+                        genres={genresArray} // Pass the parsed genres array
+                        coverUrl={result.image} // Assuming this URL is the cover image
+                        previewLink={result.previewLink} // Pass the preview
+                        score={result.score} // Pass the score
+                      />
+                    </li>
+                  );
+                })}
+              </ul>
           </div>
-        )}
-
-        {/* Get Recommendation Button */}
-        {addedBooks.length > 0 && (
-          <button
-            className="bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded-full shadow-md mt-6"
-            onClick={handleGetRecommendations}
-          >
-            Get Recommendations
-          </button>
         )}
       </section>
     </div>
   );
 };
 
-export default InputReadBookPage;
+export default InputReadBooksPage;
