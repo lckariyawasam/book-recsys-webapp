@@ -5,6 +5,7 @@ import React, { ButtonHTMLAttributes } from "react";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outline";
   size?: "small" | "medium" | "large";
+  is_square?: string;
   minwidth?: string;
   onClick?: () => void;
 }
@@ -15,10 +16,11 @@ const CustomButton: React.FC<ButtonProps> = ({
   onClick=()=>{console.log("Button Clicked")},
   minwidth="w-24",
   type = "button",
+  is_square,
   children,
   ...props
 }) => {
-    const baseClasses = 'rounded-3xl focus:outline-none transition ease-in-out duration-150';
+    const baseClasses = `${!is_square ? 'rounded-3xl' : is_square} focus:outline-none transition ease-in-out duration-150`;
   
     const variantClasses = {
       primary: 'bg-secondary text-primary-500 hover:bg-primary-200',
