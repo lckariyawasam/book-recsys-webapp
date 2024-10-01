@@ -1,8 +1,8 @@
 'use client';
-import { Epilogue} from 'next/font/google';
+import { Poppins} from 'next/font/google';
 import { createTheme } from '@mui/material/styles';
 
-export const poppins = Epilogue({
+export const poppins = Poppins({
   weight: ['300', '400', '500', '700'],
   subsets:['latin'],
   display: 'swap',
