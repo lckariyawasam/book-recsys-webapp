@@ -4,6 +4,7 @@ import { NavbarNested } from "../_components/users/NavBarNested/NavbarNested";
 import CustomButton from "../_components/Button";
 import Link from "next/link";
 import MatchOfTheDay from "../_components/users/MatchOfTheDay/MatchOfTheDay";
+import BookCardGrid from "../_components/users/BookCardGrid/BookCardGrid";
 
 const mockBook = {
   title: 'Fire and Blood',
@@ -30,6 +31,9 @@ const page = () => {
 
       {/* Match of the day */}
       <MatchOfTheDay {...mockBook}/>
+
+      {/* Books List */}
+      <BookCardGrid />
     </>
   );
 };

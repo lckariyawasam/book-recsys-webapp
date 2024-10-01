@@ -46,7 +46,7 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, genr
           <div className="flex-grow text-center sm:text-left">
             <h2 className="text-2xl font-semibold text-gray-900">{title}</h2>
             {score !== undefined && (
-              <span className="block text-green-500 text-sm font-medium font-bold mt-1">
+              <span className="block text-green-500 text-sm font-bold mt-1">
                 {score.toFixed(2)}
               </span>
             )}
