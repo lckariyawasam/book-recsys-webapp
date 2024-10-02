@@ -26,7 +26,7 @@ const mockdata = [
       { label: 'Releases schedule', link: '/' },
     ],
   },
-  { label: 'Top Books', iconName: 'IconPresentationAnalytics' },
+  { label: 'Top Books', iconName: 'IconPresentationAnalytics', link: '/user/top-books' },
   { label: 'Explore Books', iconName: 'IconFileAnalytics' },
   { label: 'Settings', iconName: 'IconAdjustments' },
   // {
