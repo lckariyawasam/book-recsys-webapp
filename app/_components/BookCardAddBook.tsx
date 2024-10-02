@@ -35,7 +35,7 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, genr
   const expandedDescription = description.length > 300 ? description.substring(0, 300) + '...' : description;
 
   return (
-    <div className="bg-yellow-50 p-4 shadow-lg flex flex-col sm:flex-row items-start py-5 mx-auto rounded-md max-w-2xl">
+    <div className="p-4 shadow-lg flex flex-col sm:flex-row items-start py-5 mx-auto rounded-md max-w-2xl">
       {coverUrl && (
         <div className="flex-shrink-0 mb-4 sm:mb-0">
           <Image src={coverUrl} alt={title} width={150} height={200} className="rounded-md" unoptimized />

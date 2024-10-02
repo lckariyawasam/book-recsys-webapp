@@ -11,7 +11,7 @@ const mockdata = [
     iconName: 'IconNotes',
     initiallyOpened: true,
     links: [
-      { label: 'Overview', link: '/user/recommendations' },
+      { label: 'All', link: '/user/my-list' },
       { label: 'Forecasts', link: '/' },
       { label: 'Outlook', link: '/' },
       { label: 'Real time', link: '/' },
