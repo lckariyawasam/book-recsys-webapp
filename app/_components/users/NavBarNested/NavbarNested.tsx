@@ -27,7 +27,7 @@ const mockdata = [
     ],
   },
   { label: 'Top Books', iconName: 'IconPresentationAnalytics', link: '/user/top-books' },
-  { label: 'Explore Books', iconName: 'IconFileAnalytics' },
+  { label: 'Explore Books', iconName: 'IconFileAnalytics', link: '/user/explore' },
   { label: 'Settings', iconName: 'IconAdjustments' },
   // {
   //   label: 'Security',

@@ -19,16 +19,6 @@ const mockBook = {
 const page = () => {
   return (
     <div className="space-y-10">
-      {/* Top Button section */}
-      <div className="flex space-x-3">
-        <Link href="/find-similar">
-          <CustomButton minwidth="w-30" size="small" is_square='rounded-sm'>
-            Find Similar
-          </CustomButton>
-        </Link>
-        <Link href='/input-read-books'><CustomButton minwidth='w-30' variant='outline' size='small' is_square="rounded-sm">Add Books</CustomButton></Link>
-      </div>
-
       {/* Match of the day */}
       <MatchOfTheDay {...mockBook}/>
 
