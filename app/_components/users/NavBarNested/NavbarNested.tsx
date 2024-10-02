@@ -1,18 +1,17 @@
-import { Group, Code, ScrollArea, rem } from '@mantine/core';
-import { UserButton } from '../UserButton/UserButton';
-import { NavbarLinksGroup } from '../NavbarLinksGroup/NavbarLinksGroup';
-import { Logo } from './Logo';
-import classes from './NavbarNested.module.css';
+import { ScrollArea } from '@mantine/core';
 import Link from 'next/link';
+import { NavbarLinksGroup } from '../NavbarLinksGroup/NavbarLinksGroup';
+import { UserButton } from '../UserButton/UserButton';
+import classes from './NavbarNested.module.css';
 
 const mockdata = [
-  { label: 'Recommendations', iconName: 'IconGauge' },
+  { label: 'Recommendations', iconName: 'IconGauge', link:'/user/recommendations' },
   {
     label: 'My List',
     iconName: 'IconNotes',
     initiallyOpened: true,
     links: [
-      { label: 'Overview', link: '/' },
+      { label: 'Overview', link: '/user/recommendations' },
       { label: 'Forecasts', link: '/' },
       { label: 'Outlook', link: '/' },
       { label: 'Real time', link: '/' },

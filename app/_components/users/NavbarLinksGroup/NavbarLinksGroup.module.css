@@ -28,6 +28,15 @@
       color: light-dark(var(--mantine-color-black), var(--mantine-color-dark-0));
     }
   }
+
+  
+  .link.active {
+    color: #EBB923; /* Example active link style */
+  }
+  
+  .control.active {
+    background-color: #FDFAEE; /* Example active button style */
+  }
   
   .chevron {
     transition: transform 200ms ease;
