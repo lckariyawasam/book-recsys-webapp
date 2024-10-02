@@ -6,18 +6,18 @@ export default function UserLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   return (
     <>
-    <div className="flex p-2">
-      <div>
-        <NavbarNested />
-      </div>
-      <div className="w-full">
-        <HeaderTabs />
-        <div className="py-5 px-24">
-        {children}
+      <div className="flex p-2">
+        <div>
+          <NavbarNested />
+        </div>
+        <div className="w-full ml-60">
+          <HeaderTabs />
+          <div className="py-10 px-24">{children}</div>
         </div>
       </div>
-    </div>
-    <FooterLinks />
+      <div className="ml-60">
+        <FooterLinks />
+      </div>
     </>
   );
 }

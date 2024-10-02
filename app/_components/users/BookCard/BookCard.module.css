@@ -15,7 +15,7 @@
     font-weight: 900;
     color: var(--mantine-color-white);
     line-height: 1.2;
-    font-size: rem(32px);
+    /* font-size: rem(32px); */
     margin-top: var(--mantine-spacing-xs);
   }
   

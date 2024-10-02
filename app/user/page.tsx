@@ -18,7 +18,7 @@ const mockBook = {
 
 const page = () => {
   return (
-    <>
+    <div className="space-y-10">
       {/* Top Button section */}
       <div className="flex space-x-3">
         <Link href="/find-similar">
@@ -34,7 +34,7 @@ const page = () => {
 
       {/* Books List */}
       <BookCardGrid />
-    </>
+    </div>
   );
 };
 
