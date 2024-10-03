@@ -34,20 +34,41 @@ const user = {
   image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
 };
 
+const links = [
+  { link: '/find-similar', label: 'Find Similar' },
+  { link: '/input-read-books', label: 'Surprise Me' },
+  { link: '/faq', label: 'FAQ' },
+  { link: '/contact-us', label: 'Contact Us' },
+];
+
 
 export function HeaderTabs() {
   const theme = useMantineTheme();
   const [opened, { toggle }] = useDisclosure(false);
   const [userMenuOpened, setUserMenuOpened] = useState(false);
 
+  const items = links.map((link) => (
+    <Link
+      key={link.label}
+      href={link.link}
+      className={classes.link}
+    >
+      {link.label}
+    </Link>
+  ));
+  
+
   return (
     <div className={`${classes.header} bg-white` }>
-      <Container className={`${classes.mainSection} bg-white w-full`} size="xl">
+      <Container className={`${classes.mainSection} bg-white w-full`} size="2xl">
         <Group justify="space-between">
-          <Link href='/'><div className='text-xl text-secondary-400 font-semibold'></div></Link>
+          <Link href='/'><div className='text-2xl text-secondary-400 font-semibold'>Book<span className='text-primary'>Match</span></div></Link>
 
           <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
-
+          <Group>
+          <Group ml={50} gap={5} className={classes.links} visibleFrom="sm">
+            {items}
+          </Group>
           <Menu
             width={260}
             position="bottom-end"
@@ -145,6 +166,7 @@ export function HeaderTabs() {
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
+          </Group>
         </Group>
       </Container>
     </div>

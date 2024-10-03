@@ -2,10 +2,19 @@
     padding-top: var(--mantine-spacing-sm);
     /* border-bottom: rem(1px) solid light-dark(var(--mantine-color-gray-2), transparent); */
     /* margin-bottom: rem(120px); */
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    width: 100%;
+    padding-left: 4rem;
+    padding-right: 4rem;
+    background-color: white;
+    z-index: 1000;
   }
   
   .mainSection {
     padding-bottom: var(--mantine-spacing-sm);
+    background-color: white;
   }
   
   .user {
@@ -56,5 +65,21 @@
       background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
       border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-7));
       border-bottom-color: transparent;
+    }
+  }
+
+  .link {
+    display: block;
+    line-height: 1;
+    padding: rem(8px) rem(8px);
+    border-radius: var(--mantine-radius-sm);
+    text-decoration: none;
+    color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));
+    font-size: var(--mantine-font-size-sm);
+    font-weight: 500;
+  
+    @mixin hover {
+      background-color: #FDFAEE;
+      color:#EBB923;
     }
   }

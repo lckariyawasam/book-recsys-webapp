@@ -8,35 +8,14 @@ export default function UserLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   return (
     <>
-      <div className="flex p-2">
+      <div className="flex py-2">
         <div>
           <NavbarNested />
         </div>
-        <div className="w-full ml-60">
+        <div className="w-full">
           <HeaderTabs />
-          <div className="py-10 px-24 space-y-10">
+          <div className="ml-60 mt-16 py-10 px-24 space-y-10">
             {/* Top Button section */}
-            <div className="flex space-x-3">
-              <Link href="/find-similar">
-                <CustomButton
-                  minwidth="w-30"
-                  size="small"
-                  is_square="rounded-sm"
-                >
-                  Find Similar
-                </CustomButton>
-              </Link>
-              <Link href="/input-read-books">
-                <CustomButton
-                  minwidth="w-30"
-                  variant="outline"
-                  size="small"
-                  is_square="rounded-sm"
-                >
-                  Add Books
-                </CustomButton>
-              </Link>
-            </div>
             {children}
           </div>
         </div>
