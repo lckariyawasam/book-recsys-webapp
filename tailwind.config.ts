@@ -12,9 +12,17 @@ const config: Config = {
         primary: {
           DEFAULT: "#EBB923",
           100: "#FDFAEE",
-          200: "#EBB923",
-          300: "#8B6C0D",
-          400: "#554208"
+          200: "#FCEB9E",
+          300: "#EBB923",
+          400: "#8B6C0D",
+          500: "#554208"
+        },
+        secondary: {
+          DEFAULT: "#FFD700",
+          100:"#9095A1",
+          200: "#6F7787",
+          300: "#565D6D",
+          400: "#323743"
         },
       },
       backgroundImage: {
