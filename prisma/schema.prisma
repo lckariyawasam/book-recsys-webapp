@@ -91,6 +91,5 @@ model amazonBooks {
   previewLink   String? @map("previewLink")
   publisher     String? @map("publisher")
   publishedDate String? @map("publishedDate")
-  bookId        Int     @map("id") // You might want to use Int or String depending on your data
-  is_ratings_available Boolean? @map("is_ratings_available")
+  bookId        Int     @map("book_id") // You might want to use Int or String depending on your data
 }
