@@ -8,7 +8,7 @@ const MarketingPage = () => {
   return (
     <div className="">
       {/* hero section */}
-      <section id="hero" className="h-full">
+      <section id="hero" data-testid="hero-section" className="h-full">
         <Container maxWidth="lg">
           <div className="min-h-[80vh] flex flex-col justify-center items-center space-y-10 md:space-y-24 py-16 md:py-20 px-5 md:px-0 w-full">
             <div className="heading-text flex flex-col justify-center items-center space-y-5">
@@ -49,7 +49,7 @@ const MarketingPage = () => {
       </section>
 
       {/* feature section */}
-      <section id="feature" className="h-full bg-primary bg-opacity-25 ">
+      <section id="feature" data-testid="feature-section" className="h-full bg-primary bg-opacity-25 ">
         <Container
           maxWidth="lg"
           className="py-16 md:py-20 flex flex-col justify-center items-center"
