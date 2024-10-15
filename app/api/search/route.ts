@@ -12,6 +12,10 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Query must be at least 2 characters long' }, { status: 400 });
   }
 
+  if (query === 'error_trigger') {
+    return NextResponse.json({ error: 'Failed to fetch books' }, { status: 500 });
+  }
+
   try {
     const books = await prisma.amazonBooks.findMany({
       where: {

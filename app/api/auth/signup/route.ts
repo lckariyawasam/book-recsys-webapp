@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
     // Create the user
     const user = await createUser({ email, password: hashedPassword, name });
 
-    return NextResponse.json(user, { status: 201 }); // Created
+    return NextResponse.json({message: 'User created successfully'}, { status: 201 }); // Created
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json({ message: error.errors[0].message }, { status: 400 }); // Bad Request
