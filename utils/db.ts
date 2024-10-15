@@ -2,6 +2,7 @@ import prisma from '@/prisma/prisma_client'
 
 
 export async function getUserByEmail(email: string) {
+    console.log(email);
     return prisma.user.findUnique({ where: { email } });
   }
 

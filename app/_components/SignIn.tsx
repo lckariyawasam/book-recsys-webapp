@@ -3,6 +3,7 @@ import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { useState } from 'react';
 
+
 export default function SignInPageComponent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +13,7 @@ export default function SignInPageComponent() {
     const result = await signIn('credentials', {
       email,
       password,
-      callbackUrl:'/test'
+      redirect: false
     });
 
     if (!result?.error) {

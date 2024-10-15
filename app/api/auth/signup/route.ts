@@ -8,10 +8,11 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, password, name } = await signUpSchema.parseAsync(body);
+    console.log(email, password, name);
 
     // Check if the user already exists
     const existingUser = await getUserByEmail(email);
-
+    console.log(existingUser);
     if (existingUser) {
       return NextResponse.json({ message: 'User already exists' }, { status: 409 }); // Conflict
     }

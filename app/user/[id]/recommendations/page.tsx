@@ -1,10 +1,7 @@
-import React from "react";
-import { HeaderTabs } from "../../_components/users/HeaderTabs/HeaderTabs";
-import { NavbarNested } from "../../_components/users/NavBarNested/NavbarNested";
-import CustomButton from "../../_components/Button";
+import CustomButton from "@/app/_components/Button";
+import BookCardGrid from "@/app/_components/users/BookCardGrid/BookCardGrid";
+import MatchOfTheDay from "@/app/_components/users/MatchOfTheDay/MatchOfTheDay";
 import Link from "next/link";
-import MatchOfTheDay from "../../_components/users/MatchOfTheDay/MatchOfTheDay";
-import BookCardGrid from "../../_components/users/BookCardGrid/BookCardGrid";
 
 const mockBook = {
   title: 'Fire and Blood',

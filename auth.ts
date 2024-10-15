@@ -38,6 +38,14 @@ export const { handlers, signIn, signOut, auth} = NextAuth({
       }
     })
   ],
+  callbacks: {
+    async session({ session, token }) {
+      if (session?.user) {
+        session.user.id = token.sub!;
+      }
+      return session;
+    }
+  },
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: 'jwt',
