@@ -83,7 +83,7 @@ const NavBar: React.FC = () => {
 
   return (
     <div className="bg-white border-b-2 border-gray-200">
-    <Container maxWidth='xl'>
+    <Container maxWidth='lg'>
       <AppBar position='sticky'>
         <Toolbar>
           <Typography
@@ -92,7 +92,7 @@ const NavBar: React.FC = () => {
             sx={{ flexGrow: 1 }}
             className="text-secondary-400"
           >
-            <Link href="/">
+            <Link href="/" className="font-semibold">
               Book<span className="text-primary-300">Match</span>
             </Link>
           </Typography>

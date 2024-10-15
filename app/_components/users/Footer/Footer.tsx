@@ -58,7 +58,7 @@ export function FooterLinks() {
 
   return (
     <footer className={classes.footer}>
-      <Container className={classes.inner}>
+    <Container size='lg' className={classes.inner}>
         <div className={classes.logo}>
           <div className='text-xl text-gray-600'>Book<span className='text-primary-300'>Match</span></div>
           <Text size="xs" c="dimmed" className={classes.description}>
