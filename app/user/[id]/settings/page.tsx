@@ -1,4 +1,3 @@
-import CustomButton from "@/app/_components/Button";
 import { FloatingLabelInput } from "@/app/_components/users/NameInput/FloatingLabelInput";
 import { Button } from "@mantine/core";
 
