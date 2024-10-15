@@ -42,9 +42,9 @@ const InputReadBooksPage = () => {
       });
       const data = await response.json();
       setRecommendations(data); // Store the recommendations in state
-      console.log('Recommendations:', data);
+      // console.log('Recommendations:', data);
     } catch (error) {
-      console.error('Error fetching recommendations:', error);
+      // console.log('Error fetching recommendations:', error);
     }
   };
 
