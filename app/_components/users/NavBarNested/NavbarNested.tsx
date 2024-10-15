@@ -12,20 +12,13 @@ const mockdata = [
     initiallyOpened: true,
     links: [
       { label: 'All', link: '/user/my-list' },
-      { label: 'Forecasts', link: '/' },
-      { label: 'Outlook', link: '/' },
-      { label: 'Real time', link: '/' },
+      { label: 'Wish List', link: '/user/wish-list' },
+      { label: 'Finished List', link: '/user/finished-list' },
+      // { label: 'Real time', link: '/' },
     ],
   },
-  {
-    label: 'Rated Books',
-    iconName: 'IconCalendarStats',
-    links: [
-      { label: 'Upcoming releases', link: '/' },
-      { label: 'Previous releases', link: '/' },
-      { label: 'Releases schedule', link: '/' },
-    ],
-  },
+
+  { label: 'Rated Books',iconName: 'IconCalendarStats',link: '/user/rated-books' },
   { label: 'Top Books', iconName: 'IconPresentationAnalytics', link: '/user/top-books' },
   { label: 'Explore Books', iconName: 'IconFileAnalytics', link: '/user/explore' },
   { label: 'Settings', iconName: 'IconAdjustments', link: '/user/settings' },
