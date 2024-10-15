@@ -1,7 +1,8 @@
 // __tests__/InputReadBooksPage.test.tsx
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
+import '@testing-library/jest-dom';
+// import '@testing-library/jest-dom/extend-expect';
 import InputReadBooksPage from '@/app/(marketing)/input-read-books/page';
 import fetchMock from 'jest-fetch-mock';
 
@@ -36,7 +37,7 @@ jest.mock('@/app/_components/Button', () => ({
   ),
 }));
 
-jest.mock('@/app/_components/BookCardAddBooks', () => ({
+jest.mock('@/app/_components/BookCardAddBook', () => ({
   __esModule: true,
   default: ({
     title,
