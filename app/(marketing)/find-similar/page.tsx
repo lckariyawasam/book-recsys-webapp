@@ -53,26 +53,20 @@ const FindSimilarPage = () => {
               <h2 className="text-lg font-semibold text-gray-800 mb-2" data-testid="search-results-title">Search Results</h2>
               <ul data-testid="search-results-list">
                 {searchResults.map((result, index) => {
-                  // Convert the genres string to an array
-                  if (result.categories == "Unknown") {
-                    result.categories = "[]";
-                  }
-                  if (result.authors == "Unknown") {
-                    result.authors = "[]";
-                  }
-                  const genresArray = JSON.parse(normalizeJsonString(result.categories));
-                  const authorsArray = JSON.parse(normalizeJsonString(result.authors));
+                  // Handle genres and authors as strings
+                  const genres = result.categories !== "Unknown" ? result.categories.split(',').map((g: string) => g.trim()) : [];
+                  const authors = result.authors !== "Unknown" ? result.authors.split(',').map((a: string) => a.trim()) : [];
 
                   return (
                     <li key={index} className="mb-4" data-testid={`search-result-item-${index}`}>
                       <BookCardAddBooks
                         title={result["Title"]}
-                        author={authorsArray}
+                        author={authors}
                         description={result.description}
-                        genres={genresArray} // Pass the parsed genres array
-                        coverUrl={result.image} // Assuming this URL is the cover image
-                        previewLink={result.previewLink} // Pass the preview
-                        score={result.score} // Pass the score
+                        genres={genres}
+                        coverUrl={result.image}
+                        previewLink={result.previewLink}
+                        score={result.score}
                       />
                     </li>
                   );
