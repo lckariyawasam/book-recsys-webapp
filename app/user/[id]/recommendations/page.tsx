@@ -1,7 +1,12 @@
+"use client"
+
 import CustomButton from "@/app/_components/Button";
 import BookCardGrid from "@/app/_components/users/BookCardGrid/BookCardGrid";
 import MatchOfTheDay from "@/app/_components/users/MatchOfTheDay/MatchOfTheDay";
 import Link from "next/link";
+
+import { useParams } from 'next/navigation';
+import { useEffect, useState } from "react";
 
 const mockBook = {
   title: 'Fire and Blood',
@@ -13,7 +18,44 @@ const mockBook = {
   score: 4.5
 }
 
+interface BookProps {
+  book_id: string;
+  Title: string;
+  description: string;
+  author: string;
+  categories: string;
+  image: string;
+  previewLink: string;
+  score: number;
+}
+
+
 const page = () => {
+  
+  const { id } = useParams();
+  console.log("id", id)
+
+  const [recommendations, setRecommendations] = useState<BookProps[]>([])
+  
+  
+  useEffect(() => {
+    const recommendations = async () => {
+      const response = await fetch('/api/recommendations/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "id": id, "k": 10 }),
+      })
+      const data = await response.json()
+      console.log(data)
+      setRecommendations(data)
+    }
+    recommendations()
+  }
+  , [])
+
+
   return (
     <div className="space-y-10">
       <div className="flex space-x-3">
@@ -38,10 +80,20 @@ const page = () => {
               </Link>
             </div>
       {/* Match of the day */}
-      <MatchOfTheDay {...mockBook}/>
+      {recommendations.length > 0 &&
+      <MatchOfTheDay 
+      title={recommendations[0].Title}
+      author={recommendations[0].author}
+      genres={recommendations[0].categories}
+      coverUrl={recommendations[0].image}
+      description={recommendations[0].description}
+      previewLink={recommendations[0].previewLink}
+      score={recommendations[0].score}
+      bookid={recommendations[0].book_id}
+      />}
 
       {/* Books List */}
-      <BookCardGrid />
+      <BookCardGrid books={recommendations.slice(1,)} />
     </div>
   );
 };

@@ -44,31 +44,27 @@ const mockBooks = [
 
 const ITEMS_PER_PAGE = 8;
 
-const BookCardGrid = () => {
+const BookCardGrid = ({ books }: { books: any[] }) => {
 
   const [currentPage, setCurrentPage] = useState(1);
-
-  // Calculate books to display based on current page
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedBooks = mockBooks.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   return (
     
     <div className="w-full border-2 mt-3 rounded-md px-20 py-10">
-      <div className="text-xl text-gray-600 font-semibold">Top Recommendations</div>
+      <div className="text-xl text-gray-600 font-semibold">Top Recommendations based on what you've read</div>
       <div className="flex flex-wrap justify-between my-3">
-        {paginatedBooks.map((book, index) => (
+        {books.map((book, index) => (
           <div key={index} className="w-[23%] flex justify-center items-center my-3">
             <BookCard 
-              backgroundImage={book.backgroundImage} 
+              backgroundImage={book.image} 
               title={book.title} 
               genre={book.genre} 
-              previewLink={book.previewLink} 
+              previewLink={`/book/${book.book_id}`} 
             />
           </div>
         ))}
         {/* Empty divs to fill in the last row when it's not complete */}
-        {Array.from({ length: ITEMS_PER_PAGE - paginatedBooks.length }).map((_, index) => (
+        {Array.from({ length: ITEMS_PER_PAGE - books.length }).map((_, index) => (
           <div key={`empty-${index}`} className="w-[23%]"></div>
         ))}
       </div>
