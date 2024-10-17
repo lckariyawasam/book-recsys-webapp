@@ -7,19 +7,6 @@ import BookList from '@/app/_components/BookList';
 import CustomButton from '@/app/_components/Button';
 import BookCardAddBooks from '@/app/_components/BookCardAddBook';
 
-const normalizeJsonString = (str:String) => {
-  // Replace escaped double quotes with single quotes
-  const replacedStr = str.replace(/\\"/g, "'");
-
-  // Replace single quotes with escaped single quotes
-  const escapedSingleQuotes = replacedStr.replace(/'s/g, "\\'s");
-
-  // Replace the remaining single quotes with double quotes for JSON parsing
-  const jsonString = escapedSingleQuotes.replace(/'/g, '"');
-
-  return jsonString;
-};
-
 const InputReadBooksPage = () => {
   const [addedBooks, setAddedBooks] = useState<{ id: string, title: string, author: string }[]>([]);
   const [recommendations, setRecommendations] = useState<any[]>([]); // New state for recommendations
@@ -74,32 +61,26 @@ const InputReadBooksPage = () => {
           <div className='mt-8 space-y-4'>
             <h2 className='text-gray-700 text-2xl font-bold'>Recommendations</h2>
             <ul>
-                {recommendations.map((result, index) => {
-                  // Convert the genres string to an array
-                  if (result.categories == "Unknown") {
-                    result.categories = "[]";
-                  }
-                  if (result.authors == "Unknown") {
-                    result.authors = "[]";
-                  }
-                  const genresArray = JSON.parse(normalizeJsonString(result.categories));
-                  const authorsArray = JSON.parse(normalizeJsonString(result.authors));
+              {recommendations.map((result, index) => {
+                // Handle genres and authors as strings
+                const genres = result.categories !== "Unknown" ? result.categories.split(',').map((g: string) => g.trim()) : [];
+                const authors = result.authors !== "Unknown" ? result.authors.split(',').map((a: string) => a.trim()) : [];
 
-                  return (
-                    <li key={index} className="mb-4">
-                      <BookCardAddBooks
-                        title={result["Title"]}
-                        author={authorsArray}
-                        description={result.description}
-                        genres={genresArray} // Pass the parsed genres array
-                        coverUrl={result.image} // Assuming this URL is the cover image
-                        previewLink={result.previewLink} // Pass the preview
-                        score={result.score} // Pass the score
-                      />
-                    </li>
-                  );
-                })}
-              </ul>
+                return (
+                  <li key={index} className="mb-4">
+                    <BookCardAddBooks
+                      title={result["Title"]}
+                      author={authors}
+                      description={result.description}
+                      genres={genres}
+                      coverUrl={result.image}
+                      previewLink={result.previewLink}
+                      score={result.score}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         )}
       </section>
