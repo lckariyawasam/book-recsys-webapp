@@ -3,9 +3,15 @@
 import { useState } from 'react';
 import { CheckIcon, Combobox, Group, Input, Pill, PillsInput, useCombobox } from '@mantine/core';
 
-const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
+const bookCategories = [
+  'Fiction', 'Non-Fiction', 'Mystery', 'Science Fiction', 'Fantasy',
+  'Romance', 'Thriller', 'Horror', 'Biography', 'History',
+  'Self-Help', 'Business', 'Science', 'Travel', 'Poetry',
+  'Children\'s', 'Young Adult', 'Classics', 'Contemporary', 'Historical Fiction'
+];
 
 const MAX_DISPLAYED_VALUES = 2;
+
 
 export function SelectGenres() {
   const combobox = useCombobox({
@@ -34,7 +40,7 @@ export function SelectGenres() {
       </Pill>
     ));
 
-  const options = groceries.map((item) => (
+  const options = bookCategories.map((item) => (
     <Combobox.Option value={item} key={item} active={value.includes(item)}>
       <Group gap="sm">
         {value.includes(item) ? <CheckIcon size={12} /> : null}

@@ -1,3 +1,5 @@
+// pages/user/[id]/explore/page.tsx
+
 import BookCardAddBook from "@/app/_components/BookCardAddBook"
 import { InputSearchBar } from "@/app/_components/users/InputSearchBar/InputSearchBar"
 import { SelectGenres } from "@/app/_components/users/selectGenres/SelectGenres"
