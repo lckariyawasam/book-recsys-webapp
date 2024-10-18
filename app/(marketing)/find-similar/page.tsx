@@ -18,6 +18,7 @@ type Book = {
   publishedDate: string | null;
   ratingsCount: number;
   bookId: number;
+  score: number;  // Added score field
 };
 
 const FindSimilarPage = () => {
@@ -32,7 +33,6 @@ const FindSimilarPage = () => {
         body: JSON.stringify({ id, k }),
       });
       const data: Book[] = await response.json();
-      console.log('Similar books:', data);
       setSearchResults(data);
     } catch (error) {
       console.error('Error fetching similar books:', error);
@@ -66,7 +66,7 @@ const FindSimilarPage = () => {
                         genres={genres.join(', ')}
                         coverUrl={result.imageURL || ''}
                         previewLink={result.previewLink || ''}
-                        score={result.ratingsCount}
+                        score={result.score}  // Use the score from the API
                       />
                     </li>
                   );

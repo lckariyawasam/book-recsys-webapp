@@ -16,6 +16,7 @@ type Book = {
   publishedDate: string | null;
   ratingsCount: number;
   bookId: number;
+  score: number;
 };
 
 export async function POST(request: NextRequest) {
@@ -53,6 +54,7 @@ export async function POST(request: NextRequest) {
       publishedDate: item.publishedDate || null,
       ratingsCount: parseInt(item.ratings_count) || 0,
       bookId: parseInt(item.book_id) || 0,
+      score: item.score || 0,
     }));
 
     return NextResponse.json(data);
