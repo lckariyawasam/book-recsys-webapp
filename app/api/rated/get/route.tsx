@@ -17,7 +17,7 @@ export async function POST(req, res) {
             return NextResponse.json({ message: 'User not found' }, { status: 404 });
         }
 
-        const usersWishlist = await prisma.wishListItem.findMany({
+        const usersWishlist = await prisma.ratedListItem.findMany({
             where: {
                 userId: parseInt(userId, 10),
             },
@@ -33,7 +33,7 @@ export async function POST(req, res) {
                 },
               },
               orderBy: {
-                addedAt: 'desc',
+                ratedAt: 'desc',
               },
         });
 
