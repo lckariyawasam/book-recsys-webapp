@@ -11,6 +11,37 @@ export async function POST(req, res) {
     }
 
     try {
+        // Check if the book exists
+        const book = await prisma.amazonBooks.findUnique({
+            where: {
+                bookId: parseInt(bookId, 10), // Assuming bookId is the unique identifier for the book
+            },
+        });
+
+        if (!book) {
+            return NextResponse.json({ message: 'Book not found' }, { status: 404 });
+        }
+
+        // Check if the book is already in the user's wishlist
+        const existingWishListItem = await prisma.wishListItem.findFirst({
+            where: {
+                userId: parseInt(userId, 10), // Assuming session.user.id holds the user's ID
+                bookId: parseInt(bookId, 10), // Assuming bookId is the unique identifier for the book
+            }
+        });
+
+        if (existingWishListItem) {
+            // remove the book from the wishlist
+            await prisma.wishListItem.delete({
+                where: {
+                    id: existingWishListItem.id,
+                },
+            });
+
+            return NextResponse.json({ message: 'Book removed from wishlist' }, { status: 200 });
+        }
+
+
         // Create a new WishListItem
         const wishListItem = await prisma.wishListItem.create({
             data: {

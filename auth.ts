@@ -44,7 +44,7 @@ export const { handlers, signIn, signOut, auth} = NextAuth({
       if (typeof token.sub === 'number') return token;
       const user = await prisma.user.findUnique({ where: { id: token.sub } });
       if (user) {
-        token.sub = user.userId;
+        token.sub = user.userId.toString();
         token.name = user.name;
         token.email = user.email;
         token.image = ""

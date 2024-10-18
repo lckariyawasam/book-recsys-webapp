@@ -16,6 +16,7 @@ interface BookProps{
     genres: string;
     imageURL: string;
     rating?: number;
+    wishlist?: boolean;
     bookId: string; // Add book_id property
     description: string;
     previewLink: string; // New prop for the preview link
@@ -32,13 +33,17 @@ const BookDetails = () => {
   const [rating, setRating] = useState(0);
   const [isRatingAdded, setIsRatingAdded] = useState(false);
   const [isAddingRating, setIsAddingRating] = useState(false);
+  const [isAddingWishlist, setIsAddingWishlist] = useState(false);
   const [clickedRating, setClickedRating] = useState(false);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   const userId = useParams().id;
 
   const addToWishlist = async () => {
     // Add logic to add the book to the user's wishlist
     // Call the api/wishlist endpoint with the book_id
+
+    setIsAddingWishlist(true);
   
     const response = await fetch(`/api/wishlist/add`, {
       method: 'POST',
@@ -51,8 +56,11 @@ const BookDetails = () => {
     console.log("Add to wishlist pressed")
   
     console.log("Added to wishlist")
+
+    setIsAddingWishlist(false);
     // Alert 
-    alert("Book added to wishlist")
+    alert(isWishlisted? "Book Removed from Wishlist" : "Book added to wishlist")
+    setIsWishlisted(!isWishlisted);
   }
 
   const handleRatingSubmit = async () => {
@@ -94,6 +102,9 @@ const BookDetails = () => {
       if (data.rating) {
         setRating(data.rating);
         setIsRatingAdded(true);
+      }
+      if (data.wishlist) {
+        setIsWishlisted(true);
       }
     } catch (error) {
       console.error('Error fetching book details:', error);
@@ -155,7 +166,18 @@ const BookDetails = () => {
             <a href={book.previewLink} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
             {/* Add a button with add to wishlist */}
             <div className="flex space-x-4 mt-5">
-              <button className="bg-primary-400 text-white px-4 py-2 rounded-md" onClick={addToWishlist}>Add to Wishlist</button>
+              <button onClick={addToWishlist}
+              disabled={isAddingWishlist}
+              className={`px-4 py-2 rounded-md ${
+                isWishlisted 
+                  ? 'bg-yellow-500 text-black' 
+                  : isAddingWishlist 
+                    ? 'bg-primary-300 text-white' 
+                    : 'bg-primary-400 text-white'
+              }`}
+              >
+                {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                </button>
               <button 
                 className={`px-4 py-2 rounded-md ${
                   isRatingAdded 

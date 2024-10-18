@@ -16,6 +16,7 @@ interface Book {
   ratingsCount: number;
   bookId: number;
   rating?: number | null;
+  wishlist?: boolean | null;
 }
 
 
@@ -54,6 +55,19 @@ export async function POST(req: NextRequest, { params }: { params: { book_id: st
 
     if (ratingsResponse) {
       book.rating = ratingsResponse.rating
+    }
+
+    const wishlistResponse = await prisma.wishListItem.findUnique({
+      where: {
+        userId_bookId: {
+          bookId: book_id_int,
+          userId: userId_int
+        }
+      }
+    })
+
+    if (wishlistResponse) {
+      book.wishlist = true
     }
 
     return NextResponse.json({ ...book });
