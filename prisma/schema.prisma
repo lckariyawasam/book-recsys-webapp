@@ -16,6 +16,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  userId        Int             @unique
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
@@ -25,6 +26,12 @@ model User {
   wishList      WishListItem[]
   finishedList  FinishedListItem[]
   ratedList     RatedListItem[]
+}
+
+model Counter {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @unique
+  count  Int
 }
 
 model Account {
