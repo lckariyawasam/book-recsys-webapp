@@ -19,7 +19,7 @@ export default function SignUpPageComponent() {
       const result = await signIn('credentials', {
         email,
         password,
-        callbackUrl:'/user/recommendations'
+        callbackUrl:'/auth/signin'
       });
   
       if (!result?.error) {
