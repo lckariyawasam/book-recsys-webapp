@@ -7,6 +7,7 @@ import { BookCard } from '@/app/_components/users/BookCard/BookCard';
 import Image from "next/image";
 import { BackgroundImage } from '@mantine/core';
 import { set } from 'zod';
+import { use } from 'chai';
 
 interface BookProps{
     title: string;
@@ -25,6 +26,43 @@ const BookDetails = () => {
   const [book, setBook] = useState<BookProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [similarBooks, setSimilarBooks] = useState<BookProps[]>([]);
+
+  const userId = useParams().id;
+
+  const addToWishlist = async () => {
+    // Add logic to add the book to the user's wishlist
+    // Call the api/wishlist endpoint with the book_id
+  
+    const response = await fetch(`/api/wishlist/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "bookId": book_id, "userId": userId }),
+    });
+
+    console.log("Add to wishlist pressed")
+  
+    console.log("Added to wishlist")
+    // Alert 
+    alert("Book added to wishlist")
+  }
+
+  const addRated = async () => {
+    // Call the api/rated endpoint with the book_id
+    const response = await fetch(`/api/rated/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "bookId": book_id, "userId": userId }),
+    });
+  
+    console.log("Added to rated")
+    // Alert 
+    alert("Book added to rated")
+  }
+
 
   // Replace with your API endpoint to fetch book details
   const fetchBookDetails = async () => {
@@ -93,8 +131,8 @@ const BookDetails = () => {
             <a href={book.previewLink} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
             {/* Add a button with add to wishlist */}
             <div className="flex space-x-4 mt-5">
-              <button className="bg-primary-400 text-white px-4 py-2 rounded-md">Add to Wishlist</button>
-              <button className="bg-primary text-white px-4 py-2 rounded-md">Add Rating</button>
+              <button className="bg-primary-400 text-white px-4 py-2 rounded-md" onClick={addToWishlist}>Add to Wishlist</button>
+              <button className="bg-primary-500 text-white px-4 py-2 rounded-md" onClick={addRated}>Mark as Read</button>
             </div>
         </div>
         {/* image on right side */}

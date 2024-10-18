@@ -144,3 +144,13 @@ model RatedListItem {
 
   @@unique([userId, bookId])
 }
+
+model Ratings {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId    Int         @map("user")  
+  bookId    Int         @map("item")
+  rating    Float       @map("label")
+
+  @@unique([userId, bookId])
+  @@map("ratings-new")
+}
