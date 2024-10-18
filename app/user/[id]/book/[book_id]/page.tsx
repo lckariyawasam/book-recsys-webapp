@@ -8,6 +8,7 @@ import Image from "next/image";
 import { BackgroundImage } from '@mantine/core';
 import { set } from 'zod';
 import { use } from 'chai';
+import { FaStar } from 'react-icons/fa';
 
 interface BookProps{
     title: string;
@@ -26,6 +27,10 @@ const BookDetails = () => {
   const [book, setBook] = useState<BookProps | null>(null);
   const [loading, setLoading] = useState(true);
   const [similarBooks, setSimilarBooks] = useState<BookProps[]>([]);
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [isRatingAdded, setIsRatingAdded] = useState(false);
+  const [isAddingRating, setIsAddingRating] = useState(false);
 
   const userId = useParams().id;
 
@@ -48,21 +53,31 @@ const BookDetails = () => {
     alert("Book added to wishlist")
   }
 
-  const addRated = async () => {
-    // Call the api/rated endpoint with the book_id
-    const response = await fetch(`/api/rated/add`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ "bookId": book_id, "userId": userId }),
-    });
-  
-    console.log("Added to rated")
-    // Alert 
-    alert("Book added to rated")
-  }
-
+  const handleRatingSubmit = async () => {
+    setIsAddingRating(true);
+    try {
+      const response = await fetch(`/api/rated/add`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ "bookId": book_id, "userId": userId, "rating": rating }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to add rating');
+      }
+      
+      setIsRatingAdded(true);
+      setShowRatingPopup(false);
+      // alert("Book rated successfully");
+    } catch (error) {
+      console.error('Error adding rating:', error);
+      alert("Failed to rate the book");
+    } finally {
+      setIsAddingRating(false);
+    }
+  };
 
   // Replace with your API endpoint to fetch book details
   const fetchBookDetails = async () => {
@@ -132,7 +147,19 @@ const BookDetails = () => {
             {/* Add a button with add to wishlist */}
             <div className="flex space-x-4 mt-5">
               <button className="bg-primary-400 text-white px-4 py-2 rounded-md" onClick={addToWishlist}>Add to Wishlist</button>
-              <button className="bg-primary-500 text-white px-4 py-2 rounded-md" onClick={addRated}>Mark as Read</button>
+              <button 
+                className={`px-4 py-2 rounded-md ${
+                  isRatingAdded 
+                    ? 'bg-green-500 text-white' 
+                    : isAddingRating 
+                      ? 'bg-primary-300 text-white' 
+                      : 'bg-primary-500 text-white'
+                }`}
+                onClick={() => !isRatingAdded && setShowRatingPopup(true)}
+                disabled={isAddingRating || isRatingAdded}
+              >
+                {isRatingAdded ? 'Rated' : isAddingRating ? 'Rating...' : 'Rate Book'}
+              </button>
             </div>
         </div>
         {/* image on right side */}
@@ -142,6 +169,44 @@ const BookDetails = () => {
             )}
         </div>
     </div>
+
+    {/* Rating Popup */}
+    {showRatingPopup && (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="bg-white p-8 rounded-lg shadow-xl max-w-md w-full">
+          <h2 className="text-2xl font-semibold mb-6 text-center">Rate this book</h2>
+          <div className="flex justify-center mb-6">
+            {[...Array(5)].map((_, index) => (
+              <FaStar
+                key={index}
+                className="cursor-pointer transition-colors duration-200"
+                color={index < rating ? "#ffc107" : "#e4e5e9"}
+                size={40}
+                onClick={() => setRating(index + 1)}
+                onMouseEnter={() => setRating(index + 1)}
+                onMouseLeave={() => setRating(rating)}
+              />
+            ))}
+          </div>
+          <div className="flex justify-end space-x-4">
+            <button
+              className="bg-gray-200 text-gray-800 px-6 py-2 rounded-md hover:bg-gray-300 transition-colors duration-200"
+              onClick={() => setShowRatingPopup(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-primary-500 text-white px-6 py-2 rounded-md hover:bg-primary-600 transition-colors duration-200"
+              onClick={handleRatingSubmit}
+              disabled={rating === 0}
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    )}
+
     {/* Add a section for similar books */}
     <div className="my-10 px-24">
       <h2 className="text-2xl font-semibold text-gray-900">Similar Books</h2>

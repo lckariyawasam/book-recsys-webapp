@@ -6,7 +6,7 @@ const RatedBooksPage = () => {
     <div className="space-y-5">
     <div className="text-3xl font-semibold text-gray-600">Rated <span className="text-primary-300">Books</span></div>
     
-    <div className="border-l-2 border-t-2 p-3 rounded-md"><TaableRatings /></div>
+    <div className="p-2"><TaableRatings /></div>
 </div>
   )
 }

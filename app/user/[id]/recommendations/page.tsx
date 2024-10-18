@@ -85,7 +85,8 @@ const page = () => {
             </div>
       {/* Match of the day */}
       {recommendations.length > 0 &&
-      <MatchOfTheDay 
+      <MatchOfTheDay
+      userId={id.toString()}
       title={recommendations[0].title}
       author={recommendations[0].author}
       genres={recommendations[0].genres}
