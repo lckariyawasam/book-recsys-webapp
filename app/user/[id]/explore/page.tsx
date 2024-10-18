@@ -111,7 +111,7 @@ const ExplorePage = () => {
                 />
               </div>
             ))
-          ) : (
+          ) : searchQuery.length === 0 ? <div>Start Typing to see results</div> : (
             <div>No books found</div>
           )}
         </div>
