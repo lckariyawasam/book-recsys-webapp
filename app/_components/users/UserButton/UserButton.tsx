@@ -1,23 +1,27 @@
 import { UnstyledButton, Group, Avatar, Text, rem } from '@mantine/core';
 import { IconChevronRight } from '@tabler/icons-react';
+import { useSession } from 'next-auth/react';
 import classes from './UserButton.module.css';
 
 export function UserButton() {
+  const { data: session } = useSession();
+
   return (
     <UnstyledButton className={classes.user}>
       <Group>
         <Avatar
-          src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png"
+          src={session?.user?.image || ''}
+          alt={session?.user?.name || ''}
           radius="xl"
         />
 
         <div style={{ flex: 1 }}>
           <Text size="sm" fw={500}>
-            Harriette Spoonlicker
+            {session?.user?.name || 'Guest User'}
           </Text>
 
           <Text c="dimmed" size="xs">
-            hspoonlicker@outlook.com
+            {session?.user?.email || 'guest@example.com'}
           </Text>
         </div>
 
