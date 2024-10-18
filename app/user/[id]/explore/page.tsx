@@ -6,6 +6,7 @@ import BookCardAddBook from "@/app/_components/BookCardAddBook";
 import { InputSearchBar } from "@/app/_components/users/InputSearchBar/InputSearchBar";
 import { SelectGenres } from "@/app/_components/users/selectGenres/SelectGenres";
 import { SelectSort } from "@/app/_components/users/SelectSort/SelectSort";
+import Link from 'next/link';
 
 // Update this type definition
 type Book = {
@@ -101,6 +102,7 @@ const ExplorePage = () => {
           ) : books.length > 0 ? (
             books.map((book) => (
               <div className="w-full" key={book.id}>
+                <Link href={`/user/${session?.user?.id}/book/${book.bookId}`}>
                 <BookCardAddBook
                   title={book.title}
                   author={book.author || ''}
@@ -109,6 +111,7 @@ const ExplorePage = () => {
                   description={book.description}
                   previewLink={`/user/${session?.user?.id}/book/${book.bookId}`}
                 />
+                </Link>
               </div>
             ))
           ) : searchQuery.length === 0 ? <div>Start Typing to see results</div> : (
