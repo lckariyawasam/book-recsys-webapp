@@ -25,7 +25,7 @@ export function BookCard({backgroundImage, title, genre, previewLink, book_id} :
           <Text className={classes.genre} size="xs">
             {genre}
           </Text>
-          <Title order={3} className={cx(classes.title, 'text-sm line-clamp-4 mb-2')}>
+          <Title order={4} className={cx(classes.title, 'text-sm line-clamp-4 mb-2 break-words')}>
             {title}
           </Title>
         </div>

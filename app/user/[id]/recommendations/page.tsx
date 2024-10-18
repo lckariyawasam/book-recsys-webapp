@@ -19,13 +19,17 @@ const mockBook = {
 }
 
 interface BookProps {
-  book_id: string;
-  Title: string;
-  description: string;
+  id: string;
+  title: string;
   author: string;
-  categories: string;
-  image: string;
+  description: string;
+  genres: string;
+  imageURL: string;
   previewLink: string;
+  publisher: string;
+  publishedDate: string;
+  ratingsCount: number;
+  bookId: number;
   score: number;
 }
 
@@ -82,14 +86,14 @@ const page = () => {
       {/* Match of the day */}
       {recommendations.length > 0 &&
       <MatchOfTheDay 
-      title={recommendations[0].Title}
+      title={recommendations[0].title}
       author={recommendations[0].author}
-      genres={recommendations[0].categories}
-      coverUrl={recommendations[0].image}
+      genres={recommendations[0].genres}
+      coverUrl={recommendations[0].imageURL}
       description={recommendations[0].description}
       previewLink={recommendations[0].previewLink}
       score={recommendations[0].score}
-      bookid={recommendations[0].book_id}
+      bookid={recommendations[0].bookId.toString()}
       />}
 
       {/* Books List */}

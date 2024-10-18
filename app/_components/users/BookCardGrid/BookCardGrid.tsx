@@ -57,10 +57,10 @@ const BookCardGrid = ({ books }: { books: any[] }) => {
         {books.map((book, index) => (
           <div key={index} className="w-[23%] flex justify-center items-center my-3">
             <BookCard 
-              backgroundImage={book.image} 
+              backgroundImage={book.imageURL} 
               title={book.title} 
-              genre={book.genre} 
-              previewLink={`/user/${session?.user?.id}/book/${book.book_id}`} 
+              genre={book.genres} 
+              previewLink={`/user/${session?.user?.id}/book/${book.bookId}`} 
             />
           </div>
         ))}
