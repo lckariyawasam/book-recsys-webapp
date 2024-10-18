@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 interface BookCardAddBooksProps {
   title: string;
   author: string;
-  genres: string[];
+  genres: string;
   coverUrl: string | null;
   description: string;
   previewLink: string; // New prop for the preview link
@@ -55,7 +55,7 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, genr
         </div>
         <h3 className="text-lg text-gray-600 mt-2">{author}</h3>
         <div className="flex flex-wrap justify-center sm:justify-start mt-2">
-          {genres.map((genre) => (
+          {genres.split(',').map((genre) => (
             <span
               key={genre}
               className={`${getRandomColor()} text-sm font-semibold mr-2 px-2.5 py-0.5 rounded-xl`}

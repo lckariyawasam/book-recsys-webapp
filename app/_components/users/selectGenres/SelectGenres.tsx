@@ -13,21 +13,21 @@ const bookCategories = [
 const MAX_DISPLAYED_VALUES = 2;
 
 
-export function SelectGenres() {
+export function SelectGenres({ value, onChange }: { value: string[]; onChange: (value: string[]) => void }) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
   });
 
-  const [value, setValue] = useState<string[]>([]);
-
-  const handleValueSelect = (val: string) =>
-    setValue((current) =>
-      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-    );
+  const handleValueSelect = (val: string) => {
+    const newValue = value.includes(val)
+      ? value.filter((v) => v !== val)
+      : [...value, val];
+    onChange(newValue);
+  };
 
   const handleValueRemove = (val: string) =>
-    setValue((current) => current.filter((v) => v !== val));
+    onChange(value.filter((v) => v !== val));
 
   const values = value
     .slice(

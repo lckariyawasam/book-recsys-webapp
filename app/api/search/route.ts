@@ -8,6 +8,7 @@ export async function GET(req: NextRequest) {
   const query = searchParams.get('query');
   const category = searchParams.get('category');
   const sortBy = searchParams.get('sortby');
+  const sortOrder = searchParams.get('sortorder');
 
   if (!query || query.length < 2) {
     return NextResponse.json({ error: 'Query must be at least 2 characters long' }, { status: 400 });
@@ -32,9 +33,9 @@ export async function GET(req: NextRequest) {
 
     let orderBy: any = {};
     if (sortBy === 'ratingsCount') {
-      orderBy.ratingsCount = 'desc';
+      orderBy.ratingsCount = sortOrder === 'asc' ? 'asc' : 'desc';
     } else if (sortBy === 'publishedDate') {
-      orderBy.publishedDate = 'desc';
+      orderBy.publishedDate = sortOrder === 'asc' ? 'asc' : 'desc';
     }
 
     const books = await prisma.amazonBooks.findMany({
@@ -44,8 +45,12 @@ export async function GET(req: NextRequest) {
         bookId: true,
         author: true,
         genres: true,
-        ratingsCount: true,
+        description: true,
+        imageURL: true,
+        previewLink: true,
+        publisher: true,
         publishedDate: true,
+        ratingsCount: true,
       },
       orderBy: orderBy,
       take: 10, // Limit the number of results
