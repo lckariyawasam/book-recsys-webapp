@@ -32,7 +32,7 @@ const genreColors: Record<string, string> = {
   'young adult': 'orange',
 };
 
-export function BooksTable({ books, userId }: { books: any[], userId: string }) {
+export function BooksTable({ books, userId, deleteCallback }: { books: any[], userId: string, deleteCallback: Function | null }) {
   console.log("From the booktable, books are", books)
   const rows = books?.length > 0 && books.map((item) => (
     <Table.Tr key={item.title}>
@@ -66,7 +66,7 @@ export function BooksTable({ books, userId }: { books: any[], userId: string }) 
           {/* <ActionIcon variant="subtle" color="gray">
             <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
           </ActionIcon> */}
-          <ActionIcon variant="subtle" color="red">
+          <ActionIcon variant="subtle" color="red" onClick={() => deleteCallback && deleteCallback(item.bookId, userId)}>
             <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
           </ActionIcon>
         </Group>

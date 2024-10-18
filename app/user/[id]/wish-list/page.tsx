@@ -60,11 +60,27 @@ const WishListPage = () => {
     fetchBooks()
   }, [id])
 
+  const handleRemoveFromWishlist = async (bookId: string, userId: string) => {
+    const response = await fetch(`/api/wishlist/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "bookId": bookId, "userId": userId }),
+    });
+
+    // Remove the book from the list
+    const newBooks = books.filter(book => book.bookId !== bookId)
+    setBooks(newBooks)
+  
+    console.log("Removed from wishlist")
+  }
+
 
   return (
     <div className="space-y-5">
         <div className="text-3xl font-medium text-gray-600">My Wishlist</div>
-        <div className="border-l-2 border-t-2 p-3 rounded-md"><BooksTable books={books} userId={id} /></div>
+        <div className="border-l-2 border-t-2 p-3 rounded-md"><BooksTable books={books} userId={id} deleteCallback={handleRemoveFromWishlist} /></div>
     </div>
   )
 }
