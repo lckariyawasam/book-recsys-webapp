@@ -10,8 +10,10 @@ export default function SignInPage() {
   const router = useRouter();
   React.useEffect(() => {
     if (session && session.user) {
-      console.log(session.user);
+      console.log("user", session.user);
       router.push(`/user/${session.user.id}/recommendations`);
+    } else {
+      console.log(session)
     }
   }, [session, router])
   
