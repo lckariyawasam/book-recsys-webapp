@@ -50,8 +50,9 @@ const genreColors: Record<string, string> = {
   'young adult': 'orange',
 };
 
-export function BooksTable() {
-  const rows = mockBooks.map((item) => (
+export function BooksTable({ books }: { books: any[] }) {
+  console.log("From the booktable, books are", books)
+  const rows = books?.length > 0 && books.map((item) => (
     <Table.Tr key={item.title}>
       <Table.Td>
         <Group gap="sm">
