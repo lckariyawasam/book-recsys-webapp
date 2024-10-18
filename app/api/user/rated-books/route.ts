@@ -21,7 +21,8 @@ export async function POST(request: NextRequest) {
             publishedDate: true,
             author: true,
             ratingsCount: true,
-            bookId: true
+            bookId: true,
+            genres: true
           },
         },
       },

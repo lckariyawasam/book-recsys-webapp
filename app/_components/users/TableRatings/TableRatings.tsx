@@ -53,6 +53,7 @@ type Book = {
       author: string;
       bookId: number;
       ratingsCount: number;
+      genres: string;
     };
   };
 
@@ -90,6 +91,7 @@ type Book = {
           <thead>
             <tr>
               <th className="px-4 py-2 border-b text-left">Book title</th>
+              <th className="px-4 py-2 border-b text-left">Genres</th>
               <th className="px-4 py-2 border-b text-left">Year</th>
               <th className="px-4 py-2 border-b text-left">Author</th>
               <th className="px-4 py-2 border-b text-left">Rating</th>
@@ -100,6 +102,7 @@ type Book = {
             {ratedBooks.map((item) => (
               <tr key={item.id}>
                 <td className="px-4 py-2 border-b">{item.book.title}</td>
+                <td className="px-4 py-2 border-b">{item.book.genres}</td>
                 {/* let's get the first 4 digits of the publishedDate */}
                 <td className="px-4 py-2 border-b">{item.book.publishedDate.slice(0, 4)}</td>
                 <td className="px-4 py-2 border-b text-blue-600">{item.book.author}</td>
