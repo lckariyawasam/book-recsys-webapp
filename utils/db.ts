@@ -25,7 +25,7 @@ export async function getUserByEmail(email: string) {
     //   throw error;
     // }
     try {
-      const [userId, user] = await prisma.$transaction(async (prisma) => {
+      const [userId, user] = await prisma.$transaction(async (prisma: { counter: { upsert: (arg0: { where: { name: string; }; update: { count: { increment: number; }; }; create: { name: string; count: number; }; }) => any; }; user: { create: (arg0: { data: { userId: any; email: string; password: string; name: string; }; }) => any; }; }) => {
         const counter = await prisma.counter.upsert({
           where: { name: 'user_id' },
           update: { count: { increment: 1 } },

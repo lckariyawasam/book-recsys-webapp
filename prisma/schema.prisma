@@ -113,8 +113,8 @@ model amazonBooks {
 
 model WishListItem {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String      @db.ObjectId
+  user      User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    Int
   book      amazonBooks @relation(fields: [bookId], references: [bookId])
   bookId    Int
   addedAt   DateTime    @default(now())
@@ -124,8 +124,8 @@ model WishListItem {
 
 model FinishedListItem {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String      @db.ObjectId
+  user      User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    Int
   book      amazonBooks @relation(fields: [bookId], references: [bookId])
   bookId    Int
   finishedAt DateTime   @default(now())
@@ -135,8 +135,8 @@ model FinishedListItem {
 
 model RatedListItem {
   id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    String      @db.ObjectId
+  user      User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    Int
   book      amazonBooks @relation(fields: [bookId], references: [bookId])
   bookId    Int
   rating    Int
