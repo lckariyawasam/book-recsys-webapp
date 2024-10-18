@@ -25,61 +25,61 @@ const MatchOfTheDay = ({ title, author, genres, coverUrl, description, previewLi
     const [showRatingPopup, setShowRatingPopup] = useState(false);
     const [rating, setRating] = useState(0);
 
-    const handleAddRated = async () => {
-        setIsLoading(true);
+    const [isAddingRating, setIsAddingRating] = useState(false);
+    const [isWishlisted, setIsWishlisted] = useState(false);
+    const [isAddingWishlist, setIsAddingWishlist] = useState(false);
+    const [isRatingAdded, setIsRatingAdded] = useState(false);
+    const [clickedRating, setClickedRating] = useState(false);
+
+    const addToWishlist = async () => {
+        // Add logic to add the book to the user's wishlist
+        // Call the api/wishlist endpoint with the book_id
+    
+        setIsAddingWishlist(true);
+      
+        const response = await fetch(`/api/wishlist/add`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ "bookId": bookid, "userId": userId }),
+        });
+    
+        console.log("Add to wishlist pressed")
+      
+        console.log("Added to wishlist")
+    
+        setIsAddingWishlist(false);
+        // Alert 
+        alert(isWishlisted? "Book Removed from Wishlist" : "Book added to wishlist")
+        setIsWishlisted(!isWishlisted);
+      }
+    
+      const handleRatingSubmit = async () => {
+        setIsAddingRating(true);
         try {
-            const response = await fetch(`/api/rated/add`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ "bookId": bookid, "userId": userId, "rating": rating }),
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to add rating');
-            }
-            
-            setIsAdded(true);
+          const response = await fetch(`/api/rated/add`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "bookId": bookid, "userId": userId, "rating": rating }),
+          });
+          
+          if (!response.ok) {
+            throw new Error('Failed to add rating');
+          }
+          
+          setIsRatingAdded(true);
+          setShowRatingPopup(false);
+          // alert("Book rated successfully");
         } catch (error) {
-            console.error('Error adding rating:', error);
-            alert("Failed to add book to rated list");
+          console.error('Error adding rating:', error);
+          alert("Failed to rate the book");
         } finally {
-            setIsLoading(false);
+          setIsAddingRating(false);
         }
-    };
-
-    const handleAddWishlist = async () => {
-        // Implement wishlist functionality here
-        alert("Add to wishlist functionality not implemented yet");
-    };
-
-    // Add this new function
-    const handleRatingSubmit = async () => {
-        setIsLoading(true);
-        try {
-            const response = await fetch(`/api/rated/add`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ "bookId": bookid, "userId": userId, "rating": rating }),
-            });
-            
-            if (!response.ok) {
-                throw new Error('Failed to add rating');
-            }
-            
-            setIsAdded(true);
-            setShowRatingPopup(false);
-        } catch (error) {
-            console.error('Error adding rating:', error);
-            alert("Failed to add book to rated list");
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
+      };
     return (
         <div className="flex flex-col md:flex-row justify-between px-4 md:px-24 py-10 border-l-2 mt-10">
             {/* content on left side */}
@@ -102,12 +102,16 @@ const MatchOfTheDay = ({ title, author, genres, coverUrl, description, previewLi
                 {/* preview link */}
                 <a href={previewLink} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
                 <div className="flex space-x-4 mt-5">
-                  <button
-                    className="bg-yellow-500 text-black px-4 py-2 rounded-md"
-                    onClick={handleAddWishlist}
-                  >
-                    Add to Wishlist
-                  </button>
+                <button onClick={addToWishlist}
+                    disabled={isAddingWishlist}
+                    className={`px-4 py-2 rounded-md ${
+                        isWishlisted 
+                        ? 'bg-yellow-500 text-black' 
+                        : isAddingWishlist 
+                            ? 'bg-primary-300 text-white' 
+                            : 'bg-primary-400 text-white'}`}>
+                        {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                </button>
                   <button
                     className={`${
                         isAdded 
@@ -142,9 +146,9 @@ const MatchOfTheDay = ({ title, author, genres, coverUrl, description, previewLi
                                     className="cursor-pointer transition-colors duration-200"
                                     color={index < rating ? "#ffc107" : "#e4e5e9"}
                                     size={40}
-                                    onClick={() => setRating(index + 1)}
-                                    onMouseEnter={() => setRating(index + 1)}
-                                    onMouseLeave={() => setRating(rating)}
+                                    onClick={() => {setClickedRating(true); setRating(index + 1)}}
+                                    onMouseEnter={() => !clickedRating && setRating(index + 1)}
+                                    onMouseLeave={() => !clickedRating && setRating(rating)}
                                 />
                             ))}
                         </div>
