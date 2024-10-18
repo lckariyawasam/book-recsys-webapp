@@ -15,6 +15,7 @@ interface BookProps{
     author: string;
     genres: string;
     imageURL: string;
+    rating?: number;
     bookId: string; // Add book_id property
     description: string;
     previewLink: string; // New prop for the preview link
@@ -83,10 +84,17 @@ const BookDetails = () => {
   // Replace with your API endpoint to fetch book details
   const fetchBookDetails = async () => {
     try {
-      const response = await fetch(`/api/book/${book_id}`);
+      const response = await fetch(`/api/book/${book_id}`, {
+        method: 'POST',
+        body: JSON.stringify({ "userId": userId }),
+      });
       const data = await response.json();
       console.log(data)
       setBook(data);
+      if (data.rating) {
+        setRating(data.rating);
+        setIsRatingAdded(true);
+      }
     } catch (error) {
       console.error('Error fetching book details:', error);
       setBook(null);
@@ -156,8 +164,8 @@ const BookDetails = () => {
                       ? 'bg-primary-300 text-white' 
                       : 'bg-primary-500 text-white'
                 }`}
-                onClick={() => !isRatingAdded && setShowRatingPopup(true)}
-                disabled={isAddingRating || isRatingAdded}
+                onClick={() => setShowRatingPopup(true)}
+                disabled={isAddingRating}
               >
                 {isRatingAdded ? 'Rated' : isAddingRating ? 'Rating...' : 'Rate Book'}
               </button>

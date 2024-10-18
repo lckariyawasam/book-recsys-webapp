@@ -12,7 +12,30 @@ export async function POST(req: NextRequest, res: NextResponse) {
     }
 
     try {
-        // Create a new WishListItem
+
+        // Check if the book is already in the rated list
+        const ratedListItemExists = await prisma.ratedListItem.findFirst({
+            where: {
+                userId: parseInt(userId, 10),
+                bookId: parseInt(bookId, 10)
+            },
+        });
+
+        // If the book is already in the rated list, update the rating
+        if (ratedListItemExists) {
+            const updatedRatedListItem = await prisma.ratedListItem.update({
+                where: {
+                    id: ratedListItemExists.id,
+                },
+                data: {
+                    rating: parseInt(rating)
+                },
+            });
+
+            return NextResponse.json(updatedRatedListItem, { status: 200 });
+        }
+
+        // Create a new rated list item
         const ratedListItem = await prisma.ratedListItem.create({
             data: {
                 userId: parseInt(userId, 10),
