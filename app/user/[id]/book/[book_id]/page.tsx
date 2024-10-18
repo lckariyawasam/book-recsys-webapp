@@ -93,8 +93,8 @@ const BookDetails = () => {
             <a href={book.previewLink} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
             {/* Add a button with add to wishlist */}
             <div className="flex space-x-4 mt-5">
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Add to Wishlist</button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-md">Add Rating</button>
+              <button className="bg-primary-400 text-white px-4 py-2 rounded-md">Add to Wishlist</button>
+              <button className="bg-primary- text-white px-4 py-2 rounded-md">Add Rating</button>
             </div>
         </div>
         {/* image on right side */}
