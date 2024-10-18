@@ -13,7 +13,7 @@ interface BookProps{
     title: string;
     author: string;
     genres: string;
-    imageURL: string | null;
+    imageURL: string;
     book_id: string; // Add book_id property
     description: string;
     previewLink: string; // New prop for the preview link
@@ -147,7 +147,7 @@ const BookDetails = () => {
       <h2 className="text-2xl font-semibold text-gray-900">Similar Books</h2>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5">
         {similarBooks.map((book) => (
-          <BookCard key={book.book_id} {...book} backgroundImage={book.image} />
+          <BookCard title={book.title} previewLink={book.previewLink} key={book.book_id} genre={book.genres} backgroundImage={book.imageURL} />
         ))}
       </div>
     </div>

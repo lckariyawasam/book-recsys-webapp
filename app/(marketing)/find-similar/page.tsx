@@ -3,25 +3,25 @@
 
 import React, { useState } from 'react';
 import SearchBar from '@/app/_components/SearchBar';
-import BookCardAddBooks from '@/app/_components/BookCardAddBook'; // Import the BookCardAddBooks component
+import BookCardAddBooks from '@/app/_components/BookCardAddBook';
 
-const normalizeJsonString = (str:String) => {
-  // Replace escaped double quotes with single quotes
-  const replacedStr = str.replace(/\\"/g, "'");
-
-  // Replace single quotes with escaped single quotes
-  const escapedSingleQuotes = replacedStr.replace(/'s/g, "\\'s");
-
-  // Replace the remaining single quotes with double quotes for JSON parsing
-  const jsonString = escapedSingleQuotes.replace(/'/g, '"');
-
-  return jsonString;
+// Define the Book type
+type Book = {
+  id: string;
+  title: string;
+  author: string | null;
+  description: string;
+  genres: string;
+  imageURL: string | null;
+  previewLink: string | null;
+  publisher: string | null;
+  publishedDate: string | null;
+  ratingsCount: number;
+  bookId: number;
 };
 
-
-
 const FindSimilarPage = () => {
-  const [searchResults, setSearchResults] = useState<any[]>([]); // Placeholder for search results
+  const [searchResults, setSearchResults] = useState<Book[]>([]);
 
   const handleBookSelect = async (id: string, k: number) => {
     console.log("Selected book ID:", id);
@@ -31,7 +31,7 @@ const FindSimilarPage = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, k }),
       });
-      const data = await response.json();
+      const data: Book[] = await response.json();
       console.log('Similar books:', data);
       setSearchResults(data);
     } catch (error) {
@@ -53,20 +53,20 @@ const FindSimilarPage = () => {
               <h2 className="text-lg font-semibold text-gray-800 mb-2" data-testid="search-results-title">Search Results</h2>
               <ul data-testid="search-results-list">
                 {searchResults.map((result, index) => {
-                  // Handle genres and authors as strings
-                  const genres = result.categories !== "Unknown" ? result.categories.split(',').map((g: string) => g.trim()) : [];
-                  const authors = result.authors !== "Unknown" ? result.authors.split(',').map((a: string) => a.trim()) : [];
+                  // Handle genres and authors
+                  const genres = result.genres !== "Unknown" ? result.genres.split(',').map((g: string) => g.trim()) : [];
+                  const authors = result.author !== "Unknown" ? result.author!.split(',').map((a: string) => a.trim()) : [];
 
                   return (
                     <li key={index} className="mb-4" data-testid={`search-result-item-${index}`}>
                       <BookCardAddBooks
-                        title={result["Title"]}
-                        author={authors}
+                        title={result.title}
+                        author={authors.join(', ')}
                         description={result.description}
-                        genres={genres}
-                        coverUrl={result.image}
-                        previewLink={result.previewLink}
-                        score={result.score}
+                        genres={genres.join(', ')}
+                        coverUrl={result.imageURL || ''}
+                        previewLink={result.previewLink || ''}
+                        score={result.ratingsCount}
                       />
                     </li>
                   );
