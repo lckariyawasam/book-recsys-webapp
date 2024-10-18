@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
     const { id, k } = await request.json();
     console.log("id: ", id, "k: ", k);
 
-    const response = await fetch(`${fastapi_url}/recommendations/`, {
+    const response = await fetch(`${fastapi_url}/all_recommendations/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
