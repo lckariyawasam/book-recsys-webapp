@@ -31,6 +31,7 @@ const BookDetails = () => {
   const [rating, setRating] = useState(0);
   const [isRatingAdded, setIsRatingAdded] = useState(false);
   const [isAddingRating, setIsAddingRating] = useState(false);
+  const [clickedRating, setClickedRating] = useState(false);
 
   const userId = useParams().id;
 
@@ -182,9 +183,9 @@ const BookDetails = () => {
                 className="cursor-pointer transition-colors duration-200"
                 color={index < rating ? "#ffc107" : "#e4e5e9"}
                 size={40}
-                onClick={() => setRating(index + 1)}
-                onMouseEnter={() => setRating(index + 1)}
-                onMouseLeave={() => setRating(rating)}
+                onClick={() => {setClickedRating(true); setRating(index + 1)}}
+                onMouseEnter={() => !clickedRating && setRating(index + 1)}
+                onMouseLeave={() => !clickedRating && setRating(rating)}
               />
             ))}
           </div>
