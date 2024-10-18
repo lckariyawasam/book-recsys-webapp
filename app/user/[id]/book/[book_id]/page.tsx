@@ -94,7 +94,7 @@ const BookDetails = () => {
             {/* Add a button with add to wishlist */}
             <div className="flex space-x-4 mt-5">
               <button className="bg-primary-400 text-white px-4 py-2 rounded-md">Add to Wishlist</button>
-              <button className="bg-primary- text-white px-4 py-2 rounded-md">Add Rating</button>
+              <button className="bg-primary text-white px-4 py-2 rounded-md">Add Rating</button>
             </div>
         </div>
         {/* image on right side */}
