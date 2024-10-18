@@ -40,12 +40,28 @@ const BookDetails = () => {
       },
       body: JSON.stringify({ "bookId": book_id, "userId": userId }),
     });
+
+    console.log("Add to wishlist pressed")
   
     console.log("Added to wishlist")
     // Alert 
     alert("Book added to wishlist")
   }
 
+  const addRated = async () => {
+    // Call the api/rated endpoint with the book_id
+    const response = await fetch(`/api/rated/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "bookId": book_id, "userId": userId }),
+    });
+  
+    console.log("Added to rated")
+    // Alert 
+    alert("Book added to rated")
+  }
 
 
   // Replace with your API endpoint to fetch book details
@@ -116,7 +132,7 @@ const BookDetails = () => {
             {/* Add a button with add to wishlist */}
             <div className="flex space-x-4 mt-5">
               <button className="bg-primary-400 text-white px-4 py-2 rounded-md" onClick={addToWishlist}>Add to Wishlist</button>
-              <button className="bg-primary- text-white px-4 py-2 rounded-md">Add Rating</button>
+              <button className="bg-primary-500 text-white px-4 py-2 rounded-md" onClick={addRated}>Mark as Read</button>
             </div>
         </div>
         {/* image on right side */}
