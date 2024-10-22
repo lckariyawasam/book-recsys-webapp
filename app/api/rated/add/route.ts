@@ -45,13 +45,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
         });
 
         // Add to the ratings list too
-        // const ratings = await prisma.ratings.create({
-        //     data: {
-        //         userId: parseInt(userId, 10),
-        //         bookId: parseInt(bookId, 10),
-        //         rating: parseInt(rating)
-        //     },
-        // });
+        const ratings = await prisma.ratings.create({
+            data: {
+                userId: parseInt(userId, 10),
+                bookId: parseInt(bookId, 10),
+                rating: parseInt(rating)
+            },
+        });
 
 
         return NextResponse.json(ratedListItem, { status: 201 });
