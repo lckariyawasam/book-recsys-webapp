@@ -106,7 +106,7 @@ const ExplorePage = () => {
                 <BookCardAddBook
                   title={book.title}
                   author={book.author || ''}
-                  genres={book.genres}
+                  genres={book.genres.split(",")}
                   coverUrl={book.imageURL || ''}
                   description={book.description}
                   previewLink={`/user/${session?.user?.id}/book/${book.bookId}`}
