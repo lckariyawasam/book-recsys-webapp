@@ -18,6 +18,26 @@ const mockBook = {
   score: 4.5
 }
 
+const loadingBook = {
+  title: 'Loading...',
+  author: '',
+  genres: '',
+  coverUrl: '',
+  description: 'Fetching the best recommendations just for you!',
+  previewLink: '',
+  score: 0
+}
+
+const loadingFailedBook = {
+  title: 'No Recommendations Found',
+  author: '',
+  genres: '',
+  coverUrl: '',
+  description: 'Please try again later',
+  previewLink: '',
+  score: 0
+}
+
 interface BookProps {
   id: string;
   title: string;
@@ -40,6 +60,7 @@ const page = () => {
   console.log("id", id)
 
   const [recommendations, setRecommendations] = useState<BookProps[]>([])
+  const [failed, setFailed] = useState(false)
   
   
   useEffect(() => {
@@ -51,6 +72,12 @@ const page = () => {
         },
         body: JSON.stringify({ "id": id, "k": 10 }),
       })
+      // Check if the response is ok
+      if (!response.ok) {
+        console.log("Failed to fetch recommendations")
+        setFailed(true)
+        return
+      }
       const data = await response.json()
       console.log(data)
       setRecommendations(data)
@@ -84,7 +111,7 @@ const page = () => {
               </Link>
             </div>
       {/* Match of the day */}
-      {recommendations.length > 0 &&
+      {recommendations.length > 0 && !failed ?
       <MatchOfTheDay
       userId={id.toString()}
       title={recommendations[0].title}
@@ -95,10 +122,42 @@ const page = () => {
       previewLink={recommendations[0].previewLink}
       score={recommendations[0].score}
       bookid={recommendations[0].bookId.toString()}
-      />}
+
+      />
+      : failed ? 
+      <MatchOfTheDay
+      userId={id.toString()}
+      title={loadingFailedBook.title}
+      author={loadingFailedBook.author}
+      genres={loadingFailedBook.genres}
+      coverUrl={""}
+      description={loadingFailedBook.description}
+      previewLink={loadingFailedBook.previewLink}
+      score={loadingFailedBook.score}
+      bookid={""}
+
+      />
+      : <MatchOfTheDay
+      userId={id.toString()}
+      title={loadingBook.title}
+      author={loadingBook.author}
+      genres={loadingBook.genres}
+      coverUrl={loadingBook.coverUrl}
+      description={loadingBook.description}
+      previewLink={loadingBook.previewLink}
+      score={loadingBook.score}
+      bookid=""
+      />
+
+      }
 
       {/* Books List */}
-      <BookCardGrid books={recommendations.slice(1,)} />
+      {
+        recommendations.length > 0 ?
+        <BookCardGrid books={recommendations.slice(1,)} />
+        : failed ? <BookCardGrid books={[loadingFailedBook]} />
+        : <BookCardGrid books={[loadingBook]} />
+      }
     </div>
   );
 };

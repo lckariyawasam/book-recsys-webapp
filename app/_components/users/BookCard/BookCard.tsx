@@ -30,7 +30,7 @@ export function BookCard({backgroundImage, title, genre, previewLink, book_id} :
           </Title>
         </div>
         <Link href={book_id ? `/user/${session?.user?.id}/book/${book_id}` : previewLink}>
-          <Button variant="white" color="dark" className="mx-auto shadow-xl hover:shadow-2xl">
+          <Button disabled={title=="Loading..." || title=="No Recommendations Found"} variant="white" color="dark" className="mx-auto shadow-xl hover:shadow-2xl">
             See More
           </Button>
         </Link>

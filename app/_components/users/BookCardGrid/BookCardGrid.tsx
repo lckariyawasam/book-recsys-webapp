@@ -61,6 +61,7 @@ const BookCardGrid = ({ books }: { books: any[] }) => {
               title={book.title} 
               genre={book.genres} 
               previewLink={`/user/${session?.user?.id}/book/${book.bookId}`} 
+              book_id={book.bookId}
             />
           </div>
         ))}

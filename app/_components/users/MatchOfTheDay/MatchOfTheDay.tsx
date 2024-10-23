@@ -98,35 +98,45 @@ const MatchOfTheDay = ({ title, author, genres, coverUrl, description, previewLi
                     {description.length > 150 ? `${description.substring(0, 150)}...` : description}
                 </p>
                 {/* score 98 */}
-                <p className="">We are <span className="text-green-400 font-semibold">{score && (score*100).toFixed(2)}%</span>   sure you'll like this!</p>
+                {
+                  (score ?? 0) > 0 && 
+                <p className="">
+                  We are <span className="text-green-400 font-semibold">{score && (score*100).toFixed(2)}%</span>   sure you'll like this!
+                </p>
+                }
                 {/* preview link */}
-                <a href={previewLink} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
-                <div className="flex space-x-4 mt-5">
-                <button onClick={addToWishlist}
-                    disabled={isAddingWishlist}
-                    className={`px-4 py-2 rounded-md ${
-                        isWishlisted 
-                        ? 'bg-yellow-500 text-black' 
-                        : isAddingWishlist 
-                            ? 'bg-primary-300 text-white' 
-                            : 'bg-primary-400 text-white'}`}>
-                        {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
-                </button>
-                  <button
-                    className={`${
-                        isAdded 
-                            ? 'bg-green-500 text-white' 
-                            : isLoading 
-                                ? 'bg-yellow-300 text-black' 
-                                : 'bg-yellow-300 text-black'
-                    } px-4 py-2 rounded-md`}
-                    onClick={() => !isAdded && setShowRatingPopup(true)}
-                    disabled={isLoading || isAdded}
-                  >
-                    {isAdded ? 'Added' : isLoading ? 'Adding...' : 'Add Rating'}
-                  </button>
-                </div>
-            </div>
+                {
+                  (score ?? 0) > 0 &&
+                  <>
+                    <a href={`/user/${userId}/book/${bookid}`} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
+                    <div className="flex space-x-4 mt-5">
+                    <button onClick={addToWishlist}
+                        disabled={isAddingWishlist}
+                        className={`px-4 py-2 rounded-md ${
+                            isWishlisted 
+                            ? 'bg-yellow-500 text-black' 
+                            : isAddingWishlist 
+                                ? 'bg-primary-300 text-white' 
+                                : 'bg-primary-400 text-white'}`}>
+                            {isWishlisted ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                    </button>
+                      <button
+                        className={`${
+                            isAdded 
+                                ? 'bg-green-500 text-white' 
+                                : isLoading 
+                                    ? 'bg-yellow-300 text-black' 
+                                    : 'bg-yellow-300 text-black'
+                        } px-4 py-2 rounded-md`}
+                        onClick={() => !isAdded && setShowRatingPopup(true)}
+                        disabled={isLoading || isAdded}
+                      >
+                        {isAdded ? 'Added' : isLoading ? 'Adding...' : 'Add Rating'}
+                      </button>
+                    </div>
+                  </>
+                }
+              </div>
             {/* image on right side */}
             <div className="flex justify-center md:justify-end items-center w-full md:w-1/2 mt-6 md:mt-0">
                 {coverUrl && (
