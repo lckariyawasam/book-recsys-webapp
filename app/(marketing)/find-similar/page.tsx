@@ -23,9 +23,11 @@ type Book = {
 
 const FindSimilarPage = () => {
   const [searchResults, setSearchResults] = useState<Book[]>([]);
+  const [loading, setLoading] = useState(false);
 
   const handleBookSelect = async (id: string, k: number) => {
     console.log("Selected book ID:", id);
+    setLoading(true);
     try {
       const response = await fetch('/api/similar-books/select-book', {
         method: 'POST',
@@ -36,6 +38,8 @@ const FindSimilarPage = () => {
       setSearchResults(data);
     } catch (error) {
       console.error('Error fetching similar books:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,7 +67,7 @@ const FindSimilarPage = () => {
                         title={result.title}
                         author={authors.join(', ')}
                         description={result.description}
-                        genres={genres.join(', ')}
+                        genres={genres}
                         coverUrl={result.imageURL || ''}
                         previewLink={result.previewLink || ''}
                         score={result.score}  // Use the score from the API
