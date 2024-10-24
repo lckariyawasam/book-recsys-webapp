@@ -1,51 +1,56 @@
 'use client'
 
 import { Text, Container, ActionIcon, Group, rem } from '@mantine/core';
-import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram } from '@tabler/icons-react';
+import { IconBrandTwitter, IconBrandYoutube, IconBrandInstagram, IconBrandFacebook } from '@tabler/icons-react';
+import Link from 'next/link';
 import classes from './Footer.module.css';
+import { useSession } from 'next-auth/react';
+
+// const { data: session } = useSession();
+//   const user = session?.user;
+//   // if (!user) {
+//   //   // return null;
+//   // }
+//   const userId = user?.id;
 
 const data = [
   {
-    title: 'About',
+    title: 'About Us',
     links: [
-      { label: 'Features', link: '#' },
-      { label: 'Pricing', link: '#' },
-      { label: 'Support', link: '#' },
-      { label: 'Forums', link: '#' },
+      { label: 'Home', link: '/' },
+      { label: 'Create an Account', link: '/auth/signup' }, // Changed link to an example
+      { label: 'LogIn', link: '/auth/signin' }, // Changed link to an example
     ],
   },
   {
-    title: 'Project',
+    title: 'Try Out',
     links: [
-      { label: 'Contribute', link: '#' },
-      { label: 'Media assets', link: '#' },
-      { label: 'Changelog', link: '#' },
-      { label: 'Releases', link: '#' },
+      { label: 'Find Similar', link: '/find-similar' },
+      // { label: 'Explore Books', link: `/user/${userId}/explore` }, // Changed link to an example
+      // { label: 'Recommendations', link: `/user/${userId}/recommendations` },  
+      { label: 'Explore Books', link: `/user//explore` }, // Changed link to an example
+      { label: 'Recommendations', link: `/user/recommendations` },  
+      { label: 'Rate Books', link: '/rate-books' }, // Changed link to an example
     ],
   },
   {
-    title: 'Community',
+    title: 'Support',
     links: [
-      { label: 'Join Discord', link: '#' },
-      { label: 'Follow on Twitter', link: '#' },
-      { label: 'Email newsletter', link: '#' },
-      { label: 'GitHub discussions', link: '#' },
+      { label: 'Help Center', link: '/help-center' }, // Changed link to an example
+      { label: 'FAQs', link: '/faqs' }, // Changed link to an example
+      { label: 'Contact Us', link: '/contact-us' }, // Changed link to an example
     ],
   },
 ];
 
 export function FooterLinks() {
+  const { data: session } = useSession();
+
   const groups = data.map((group) => {
     const links = group.links.map((link, index) => (
-      <Text<'a'>
-        key={index}
-        className={classes.link}
-        component="a"
-        href={link.link}
-        onClick={(event) => event.preventDefault()}
-      >
-        {link.label}
-      </Text>
+      <Link key={index} href={link.link} className={classes.link}>
+        <Text component="span">{link.label}</Text>
+      </Link>
     ));
 
     return (
@@ -58,31 +63,32 @@ export function FooterLinks() {
 
   return (
     <footer className={classes.footer}>
-    <Container size='lg' className={classes.inner}>
+      <Container size='lg' className={classes.inner}>
         <div className={classes.logo}>
           <div className='text-xl text-gray-600'>Book<span className='text-primary-300'>Match</span></div>
           <Text size="xs" c="dimmed" className={classes.description}>
-            Build fully functional accessible web applications faster than ever
+            Discover books tailored just for you. We connect you with stories that resonate with your unique taste
           </Text>
         </div>
         <div className={classes.groups}>{groups}</div>
       </Container>
       <Container className={classes.afterFooter}>
-        <Text c="dimmed" size="sm">
-          © 2020 mantine.dev. All rights reserved.
+        <Text c="dimmed" size="sm" style={{ textAlign: 'center', width: '100%' }}>
+          © 2024 bookmatch.dev. All rights reserved.
         </Text>
 
-        <Group gap={3} className={classes.social} justify="flex-end" wrap="nowrap">
+        {/* Uncomment if you want to add social media links */}
+        {/* <Group gap={3} className={classes.social} justify="flex-end" wrap="nowrap">
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandTwitter style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
           <ActionIcon size="lg" color="gray" variant="subtle">
-            <IconBrandYoutube style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
+            <IconBrandFacebook style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
           <ActionIcon size="lg" color="gray" variant="subtle">
             <IconBrandInstagram style={{ width: rem(18), height: rem(18) }} stroke={1.5} />
           </ActionIcon>
-        </Group>
+        </Group> */}
       </Container>
     </footer>
   );
