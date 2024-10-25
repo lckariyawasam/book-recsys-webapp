@@ -74,7 +74,9 @@ const SearchBarAddBooks: React.FC<SearchBarAddBooksProps> = ({ handleBookAdd, fi
             >
               <div className='flex-shrink-0 mr-3'>
                 <Image
-                  src={suggestion.imageURL || '/placeholder-book-cover.jpg'}
+                  src={suggestion.imageURL && suggestion.imageURL.startsWith('http') 
+                    ? suggestion.imageURL 
+                    : '/placeholder-book-cover.jpg'}
                   alt={`Cover of ${suggestion.title}`}
                   width={40}
                   height={60}
