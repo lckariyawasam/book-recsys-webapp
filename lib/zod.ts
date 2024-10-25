@@ -1,17 +1,17 @@
-import { object, string } from "zod"
+import { object, string, z } from "zod"
  
-export const signInSchema = object({
-  email: string({ required_error: "Email is required" })
-    .min(1, "Email is required")
-    .email("Invalid email"),
-  password: string({ required_error: "Password is required" })
-    .min(1, "Password is required")
-    .min(8, "Password must be more than 8 characters")
-    .max(32, "Password must be less than 32 characters"),
-})
+export const signInSchema = z.object({
+  email: z.string().email('Invalid email address'),
+  password: z.string().min(1, 'Password is required'),
+});
 
 export const signUpSchema = object({
   email: string().min(1, 'Email is required').email('Invalid email'),
-  password: string().min(8, 'password must be at least 8 characters'),
+  password: string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/^(?=.*[a-z])(?=.*[A-Z])/, 'Password must contain at least 1 uppercase and 1 lowercase letter'),
   name: string().min(1, 'Name is required'),
 });
+
+export type SignInFormData = z.infer<typeof signInSchema>;
+export type SignUpFormData = z.infer<typeof signUpSchema>;

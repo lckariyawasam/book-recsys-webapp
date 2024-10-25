@@ -3,6 +3,7 @@
 import cx from 'clsx';
 import Link from 'next/link';
 import { useState } from 'react';
+import { signOut } from "next-auth/react"
 import {
   Container,
   Avatar,
@@ -91,7 +92,7 @@ export function HeaderTabs() {
                     <IconLogout style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
                   }
                 >
-                  Logout
+                  <button onClick={() => signOut()}>Logout</button>
                 </Menu.Item>
 
                 <Menu.Divider />
@@ -111,3 +112,7 @@ export function HeaderTabs() {
     </div>
   );
 }
+ 
+// export function SignOut() {
+//   return <button onClick={() => signOut()}>Sign Out</button>
+// }
