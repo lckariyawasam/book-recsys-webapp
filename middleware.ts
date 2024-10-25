@@ -1,12 +1,13 @@
 import { auth } from "@/auth"
- 
+
 async function middleware() {
   const session = await auth()
   return session
 }
 
 export default auth((req) => {
-  if (!req.auth && req.nextUrl.pathname !== "/auth/signin") {
+  const publicPaths = ['/', '/auth/signin', '/auth/signup', '/find-similar', '/input-read-books']
+  if (!req.auth && !publicPaths.includes(req.nextUrl.pathname)) {
     const newUrl = new URL("/auth/signin", req.nextUrl.origin)
     return Response.redirect(newUrl)
   }
