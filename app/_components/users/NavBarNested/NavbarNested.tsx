@@ -1,39 +1,38 @@
+'use client'
+
 import { ScrollArea } from '@mantine/core';
 import Link from 'next/link';
 import { NavbarLinksGroup } from '../NavbarLinksGroup/NavbarLinksGroup';
 import { UserButton } from '../UserButton/UserButton';
 import classes from './NavbarNested.module.css';
-
-const mockdata = [
-  { label: 'Recommendations', iconName: 'IconGauge', link:'/user/recommendations' },
-  {
-    label: 'My List',
-    iconName: 'IconNotes',
-    initiallyOpened: true,
-    links: [
-      { label: 'All', link: '/user/my-list' },
-      { label: 'Wish List', link: '/user/wish-list' },
-      { label: 'Finished List', link: '/user/finished-list' },
-      // { label: 'Real time', link: '/' },
-    ],
-  },
-
-  { label: 'Rated Books',iconName: 'IconCalendarStats',link: '/user/rated-books' },
-  { label: 'Top Books', iconName: 'IconPresentationAnalytics', link: '/user/top-books' },
-  { label: 'Explore Books', iconName: 'IconFileAnalytics', link: '/user/explore' },
-  { label: 'Settings', iconName: 'IconAdjustments', link: '/user/settings' },
-  // {
-  //   label: 'Security',
-  //   iconName: 'IconLock',
-  //   links: [
-  //     { label: 'Enable 2FA', link: '/' },
-  //     { label: 'Change password', link: '/' },
-  //     { label: 'Recovery codes', link: '/' },
-  //   ],
-  // },
-];
+import { useSession } from 'next-auth/react';
 
 export function NavbarNested() {
+  const { data: session } = useSession();
+  const user = session?.user;
+  if (!user) {
+    return null;
+  }
+  const userId = user.id;
+
+  const mockdata = [
+    { label: 'Recommendations', iconName: 'IconGauge', link: `/user/${userId}/recommendations` },
+    {
+      label: 'My List',
+      iconName: 'IconNotes',
+      initiallyOpened: true,
+      links: [
+        { label: 'All', link: `/user/${userId}/my-list` },
+        { label: 'Wish List', link: `/user/${userId}/wish-list` },
+        { label: 'Finished List', link: `/user/${userId}/finished-list` },
+      ],
+    },
+    { label: 'Rated Books', iconName: 'IconCalendarStats', link: `/user/${userId}/rated-books` },
+    { label: 'Top Books', iconName: 'IconPresentationAnalytics', link: `/user/${userId}/top-books` },
+    { label: 'Explore Books', iconName: 'IconFileAnalytics', link: `/user/${userId}/explore` },
+    { label: 'Settings', iconName: 'IconAdjustments', link: `/user/${userId}/settings` },
+  ];
+
   const links = mockdata.map((item) => <NavbarLinksGroup {...item} key={item.label} />);
 
   return (

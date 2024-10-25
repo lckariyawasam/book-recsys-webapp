@@ -1,5 +1,6 @@
 // components/Footer.tsx
 import React from 'react';
+import Image from 'next/image';
 
 const Footer: React.FC = () => {
   return (
@@ -55,10 +56,18 @@ const Footer: React.FC = () => {
           © 2022 Brand, Inc. • <a href="#" className="hover:text-gray-800">Privacy</a> • <a href="#" className="hover:text-gray-800">Terms</a> • <a href="#" className="hover:text-gray-800">Sitemap</a>
         </div>
         <div className="flex space-x-4">
-          <a href="#"><img src="/twitter-icon.png" alt="Twitter" className="w-6 h-6"/></a>
-          <a href="#"><img src="/facebook-icon.png" alt="Facebook" className="w-6 h-6"/></a>
-          <a href="#"><img src="/linkedin-icon.png" alt="LinkedIn" className="w-6 h-6"/></a>
-          <a href="#"><img src="/youtube-icon.png" alt="YouTube" className="w-6 h-6"/></a>
+          <a href="#">
+            <Image src="/twitter-icon.png" alt="Twitter" width={24} height={24} />
+          </a>
+          <a href="#">
+            <Image src="/facebook-icon.png" alt="Facebook" width={24} height={24} />
+          </a>
+          <a href="#">
+            <Image src="/linkedin-icon.png" alt="LinkedIn" width={24} height={24} />
+          </a>
+          <a href="#">
+            <Image src="/youtube-icon.png" alt="YouTube" width={24} height={24} />
+          </a>
         </div>
       </div>
     </footer>

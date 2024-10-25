@@ -3,25 +3,31 @@
 import { useState } from 'react';
 import { CheckIcon, Combobox, Group, Input, Pill, PillsInput, useCombobox } from '@mantine/core';
 
-const groceries = ['🍎 Apples', '🍌 Bananas', '🥦 Broccoli', '🥕 Carrots', '🍫 Chocolate'];
+const bookCategories = [
+  'Fiction', 'Non-Fiction', 'Mystery', 'Science Fiction', 'Fantasy',
+  'Romance', 'Thriller', 'Horror', 'Biography', 'History',
+  'Self-Help', 'Business', 'Science', 'Travel', 'Poetry',
+  'Children\'s', 'Young Adult', 'Classics', 'Contemporary', 'Historical Fiction'
+];
 
 const MAX_DISPLAYED_VALUES = 2;
 
-export function SelectGenres() {
+
+export function SelectGenres({ value, onChange }: { value: string[]; onChange: (value: string[]) => void }) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: () => combobox.updateSelectedOptionIndex('active'),
   });
 
-  const [value, setValue] = useState<string[]>([]);
-
-  const handleValueSelect = (val: string) =>
-    setValue((current) =>
-      current.includes(val) ? current.filter((v) => v !== val) : [...current, val]
-    );
+  const handleValueSelect = (val: string) => {
+    const newValue = value.includes(val)
+      ? value.filter((v) => v !== val)
+      : [...value, val];
+    onChange(newValue);
+  };
 
   const handleValueRemove = (val: string) =>
-    setValue((current) => current.filter((v) => v !== val));
+    onChange(value.filter((v) => v !== val));
 
   const values = value
     .slice(
@@ -34,7 +40,7 @@ export function SelectGenres() {
       </Pill>
     ));
 
-  const options = groceries.map((item) => (
+  const options = bookCategories.map((item) => (
     <Combobox.Option value={item} key={item} active={value.includes(item)}>
       <Group gap="sm">
         {value.includes(item) ? <CheckIcon size={12} /> : null}

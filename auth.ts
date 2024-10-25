@@ -38,6 +38,29 @@ export const { handlers, signIn, signOut, auth} = NextAuth({
       }
     })
   ],
+  callbacks: {
+    async jwt({ token }) {
+      // Check if the token.sub is an int and return if it is
+      console.log(token.sub, typeof token.sub)
+      const isObjectId = token.sub ? /^[0-9a-f]{24}$/.test(token.sub) : false;
+      if (!isObjectId) return token;
+      const user = await prisma.user.findUnique({ where: { id: token.sub } });
+      if (user) {
+        token.sub = user.userId.toString();
+        token.name = user.name;
+        token.email = user.email;
+        token.image = ""
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // console.log(token)
+      if (session?.user) {
+        session.user.id = token.sub!;
+      }
+      return session;
+    }
+  },
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: 'jwt',

@@ -3,16 +3,14 @@
 import { useState } from 'react';
 import { CheckIcon, Combobox, Group, Input, InputBase, useCombobox } from '@mantine/core';
 
-const groceries = [
-  '🍎 Apples',
-  '🍌 Bananas',
-  '🥦 Broccoli',
-  '🥕 Carrots',
-  '🍫 Chocolate',
-  '🍇 Grapes',
+const sortOptions = [
+  'Ratings Count (High to Low)',
+  'Ratings Count (Low to High)',
+  'Publish Date (Newest First)',
+  'Publish Date (Oldest First)', 
 ];
 
-export function SelectSort() {
+export function SelectSort({ value, onChange }: { value: string; onChange: (value: string) => void }) {
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
     onDropdownOpen: (eventSource) => {
@@ -23,10 +21,8 @@ export function SelectSort() {
       }
     },
   });
-
-  const [value, setValue] = useState<string | null>('🥦 Broccoli');
-
-  const options = groceries.map((item) => (
+  
+  const options = sortOptions.map((item) => (
     <Combobox.Option value={item} key={item} active={item === value}>
       <Group gap="xs">
         {item === value && <CheckIcon size={12} />}
@@ -41,7 +37,7 @@ export function SelectSort() {
       resetSelectionOnOptionHover
       withinPortal={false}
       onOptionSubmit={(val) => {
-        setValue(val);
+        onChange(val);
         combobox.updateSelectedOptionIndex('active');
       }}
     >
@@ -54,7 +50,7 @@ export function SelectSort() {
           rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
         >
-          {value || <Input.Placeholder>Pick value</Input.Placeholder>}
+          {value || <Input.Placeholder>Select sort option</Input.Placeholder>}
         </InputBase>
       </Combobox.Target>
 

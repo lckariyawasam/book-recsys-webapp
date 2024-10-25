@@ -16,11 +16,22 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  userId        Int             @unique
   // Optional for WebAuthn support
   Authenticator Authenticator[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  wishList      WishListItem[]
+  finishedList  FinishedListItem[]
+  ratedList     RatedListItem[]
+}
+
+model Counter {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  name   String @unique
+  count  Int
 }
 
 model Account {
@@ -91,6 +102,55 @@ model amazonBooks {
   previewLink   String? @map("previewLink")
   publisher     String? @map("publisher")
   publishedDate String? @map("publishedDate")
-  bookId        Int     @map("id") // You might want to use Int or String depending on your data
-  is_ratings_available Boolean? @map("is_ratings_available")
+  ratingsCount  Int    @map("ratings_count")
+  bookId        Int     @map("book_id") @unique
+  wishListItems     WishListItem[]
+  finishedListItems FinishedListItem[]
+  ratedListItems    RatedListItem[]
+
+  @@map("amazon-new")
+}
+
+model WishListItem {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  user      User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    Int
+  book      amazonBooks @relation(fields: [bookId], references: [bookId])
+  bookId    Int
+  addedAt   DateTime    @default(now())
+
+  @@unique([userId, bookId])
+}
+
+model FinishedListItem {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  user      User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    Int
+  book      amazonBooks @relation(fields: [bookId], references: [bookId])
+  bookId    Int
+  finishedAt DateTime   @default(now())
+
+  @@unique([userId, bookId])
+}
+
+model RatedListItem {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  user      User        @relation(fields: [userId], references: [userId], onDelete: Cascade)
+  userId    Int
+  book      amazonBooks @relation(fields: [bookId], references: [bookId])
+  bookId    Int
+  rating    Int
+  ratedAt   DateTime    @default(now())
+
+  @@unique([userId, bookId])
+}
+
+model Ratings {
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId    Int         @map("user")  
+  bookId    Int         @map("item")
+  rating    Float       @map("label")
+
+  @@unique([userId, bookId])
+  @@map("ratings-new")
 }

@@ -1,3 +1,5 @@
+// _components/users/InputSearchBar/InputSearchBar.tsx
+
 'use client'
 
 import { TextInput, TextInputProps, ActionIcon, useMantineTheme, rem } from '@mantine/core';

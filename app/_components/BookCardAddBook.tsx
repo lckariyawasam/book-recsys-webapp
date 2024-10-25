@@ -27,16 +27,14 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, genr
 
   const getRandomColor = () => genreColors[Math.floor(Math.random() * genreColors.length)];
 
-  const [isExpanded, setIsExpanded] = useState(false);
+  // Truncate title to two lines (approximately 60 characters)
+  const truncatedTitle = title.length > 60 ? title.substring(0, 60) + '...' : title;
 
-  // Truncate description to 150 characters
-  const truncatedDescription = description.length > 150 ? description.substring(0, 150) + '...' : description;
-
-  // Expand description to 300 characters
-  const expandedDescription = description.length > 300 ? description.substring(0, 300) + '...' : description;
+  // Truncate description to 3 lines (approximately 180 characters)
+  const truncatedDescription = description.length > 180 ? description.substring(0, 180) + '...' : description;
 
   return (
-    <div className="p-4 shadow-lg flex flex-col sm:flex-row items-start py-5 mx-auto rounded-md max-w-2xl">
+    <div className="p-4 shadow-lg flex flex-col sm:flex-row items-start py-5 mx-auto rounded-md max-w-2xl h-[300px] hover:shadow-2xl">
       {coverUrl && (
         <div className="flex-shrink-0 mb-4 sm:mb-0">
           <Image src={coverUrl} alt={title} width={150} height={200} className="rounded-md" unoptimized />
@@ -45,7 +43,7 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, genr
       <div className="sm:ml-6 w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start">
           <div className="flex-grow text-center sm:text-left">
-            <h2 className="text-2xl font-semibold text-gray-900">{title}</h2>
+            <h2 className="text-xl font-semibold text-gray-900 line-clamp-2">{truncatedTitle}</h2>
             {score !== undefined && (
               <span className="block text-green-500 text-sm font-bold mt-1">
                 {score.toFixed(2)}
@@ -64,17 +62,9 @@ const BookCardAddBooks: React.FC<BookCardAddBooksProps> = ({ title, author, genr
             </span>
           ))}
         </div>
-        <p className="mt-4 text-sm text-gray-700">
-          {isExpanded ? expandedDescription : truncatedDescription}
+        <p className="mt-4 text-sm text-gray-700 line-clamp-3">
+          {truncatedDescription}
         </p>
-        {description.length > 150 && (
-          <button
-            className="mt-2 mr-5 text-blue-400 hover:underline"
-            onClick={() => setIsExpanded(!isExpanded)}
-          >
-            {isExpanded ? 'Read Less' : 'Read More'}
-          </button>
-        )}
         {previewLink && (
           <a
             href={previewLink}

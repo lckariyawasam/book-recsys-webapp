@@ -6,6 +6,7 @@ import { Epilogue } from "next/font/google";
 import "@mantine/core/styles.css";
 
 import { ColorSchemeScript, MantineProvider, createTheme } from "@mantine/core";
+import { SessionProvider } from "next-auth/react";
 
 const theme = createTheme({
   fontFamily: "Poppins, sans-serif",
@@ -25,9 +26,11 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <ColorSchemeScript />
       </head>
       <body>
+        <SessionProvider>
         <AppRouterCacheProvider>
         <MantineProvider theme={theme}><StyledRoot>{children}</StyledRoot></MantineProvider>
         </AppRouterCacheProvider>
+        </SessionProvider>
       </body>
     </html>
   );

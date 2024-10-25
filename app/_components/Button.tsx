@@ -3,7 +3,7 @@
 import React, { ButtonHTMLAttributes } from "react";
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outline";
+  variant?: "primary" | "secondary" | "outline" | "disabled";
   size?: "small" | "medium" | "large";
   is_square?: string;
   minwidth?: string;
@@ -26,6 +26,7 @@ const CustomButton: React.FC<ButtonProps> = ({
       primary: 'bg-secondary text-primary-500 hover:bg-primary-200',
       secondary: 'bg-primary-100 text-primary-400 hover:bg-primary-200',
       outline: 'bg-white border border-primary-400 text-primary-400 hover:bg-primary-100',
+      disabled: 'bg-yellow-100 text-gray-400 cursor-not-allowed',
     };
     
     const sizeClasses = {

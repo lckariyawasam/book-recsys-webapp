@@ -8,10 +8,11 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const { email, password, name } = await signUpSchema.parseAsync(body);
+    console.log(email, password, name);
 
     // Check if the user already exists
     const existingUser = await getUserByEmail(email);
-
+    console.log(existingUser);
     if (existingUser) {
       return NextResponse.json({ message: 'User already exists' }, { status: 409 }); // Conflict
     }
@@ -22,7 +23,7 @@ export async function POST(req: NextRequest) {
     // Create the user
     const user = await createUser({ email, password: hashedPassword, name });
 
-    return NextResponse.json(user, { status: 201 }); // Created
+    return NextResponse.json({message: 'User created successfully'}, { status: 201 }); // Created
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json({ message: error.errors[0].message }, { status: 400 }); // Bad Request
