@@ -52,7 +52,7 @@ const BookCardGrid = ({ books }: { books: any[] }) => {
 
   return (
     <div className="w-full border-2 mt-3 rounded-md px-20 py-10">
-      <div className="text-xl text-gray-600 font-semibold">Top Recommendations based on what you've read</div>
+      <div className="text-xl text-gray-600 font-semibold">Top Recommendations based on what you&apos;ve read</div>
       <div className="flex flex-wrap justify-between my-3">
         {books.map((book, index) => (
           <div key={index} className="w-[23%] flex justify-center items-center my-3">

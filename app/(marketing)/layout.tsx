@@ -1,13 +1,17 @@
-import { PropsWithChildren } from "react"
+import React from "react"
 import NavBar from "../_components/NavBar"
 import { FooterLinks } from "../_components/users/Footer/Footer"
 
-const MarketingLayout = ({children} : { children: PropsWithChildren }) => {
+interface MarketingLayoutProps {
+  children: React.ReactNode
+}
+
+const MarketingLayout: React.FC<MarketingLayoutProps> = ({ children }) => {
   return (
     <>
-        <NavBar />
-        {children}
-        <FooterLinks />
+      <NavBar />
+      <main>{children}</main>
+      <FooterLinks />
     </>
   )
 }

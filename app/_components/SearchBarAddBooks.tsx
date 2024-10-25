@@ -1,6 +1,7 @@
 // components/SearchBarAddBooks.tsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import CustomButton from '@/app/_components/Button';
 
 interface SearchBarAddBooksProps {
@@ -10,22 +11,23 @@ interface SearchBarAddBooksProps {
 
 const SearchBarAddBooks: React.FC<SearchBarAddBooksProps> = ({ handleBookAdd, filterByRatings = true }) => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [suggestions, setSuggestions] = useState<{ id: string, title: string, author: string }[]>([]);
+  const [suggestions, setSuggestions] = useState<{ id: string, title: string, author: string, imageURL: string }[]>([]);
 
-  const fetchSuggestions = async (query: string) => {
+  const fetchSuggestions = useCallback(async (query: string) => {
     if (query.length < 2) return; // Minimal length for triggering search
     try {
       const response = await fetch(`/api/search?query=${query}&filterByRatings=${filterByRatings}`);
       const data = await response.json();
-      setSuggestions(data.books.map((book: { bookId: string, title: string, author: string }) => ({
+      setSuggestions(data.books.map((book: { bookId: string, title: string, author: string, imageURL: string }) => ({
         id: book.bookId,
         title: book.title,
-        author: book.author
+        author: book.author,
+        imageURL: book.imageURL
       })));
     } catch (error) {
       console.error('Error fetching suggestions:', error);
     }
-  };
+  }, [filterByRatings]);
 
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
@@ -33,7 +35,7 @@ const SearchBarAddBooks: React.FC<SearchBarAddBooksProps> = ({ handleBookAdd, fi
     }, 300); // 300ms delay for debouncing
 
     return () => clearTimeout(delayDebounceFn); // Cleanup the timeout
-  }, [searchTerm]);
+  }, [searchTerm, fetchSuggestions]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -67,11 +69,22 @@ const SearchBarAddBooks: React.FC<SearchBarAddBooksProps> = ({ handleBookAdd, fi
           {suggestions.map((suggestion) => (
             <li
               key={suggestion.id}
-              className='p-3 hover:bg-secondary-100 cursor-pointer transition-colors duration-150 border-b border-gray-200 last:border-b-0'
+              className='p-3 hover:bg-secondary-100 cursor-pointer transition-colors duration-150 border-b border-gray-200 last:border-b-0 flex items-center'
               onClick={() => handleSuggestionClick(suggestion.id.toString(), suggestion.title, suggestion.author)}
             >
-              <div className='text-base font-semibold'>{suggestion.title}</div>
-              <div className='text-sm text-gray-500'>{suggestion.author}</div>
+              <div className='flex-shrink-0 mr-3'>
+                <Image
+                  src={suggestion.imageURL || '/placeholder-book-cover.jpg'}
+                  alt={`Cover of ${suggestion.title}`}
+                  width={40}
+                  height={60}
+                  className='object-cover'
+                />
+              </div>
+              <div>
+                <div className='text-base font-semibold'>{suggestion.title}</div>
+                <div className='text-sm text-gray-500'>{suggestion.author}</div>
+              </div>
             </li>
           ))}
         </ul>

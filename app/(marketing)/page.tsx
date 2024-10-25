@@ -35,7 +35,7 @@ const MarketingPage = () => {
               <div className="option2 col-span-1 md:col-span-1 flex flex-col justify-between items-center h-full md:p-10 space-y-5 md:space-y-10 md:border-l-2">
                 <h2 className="text-gray-700 text-2xl md:text-3xl lg:text-4xl font-bold text-center">
                   Get recommendations by
-                  <br className="hidden md:block" /> telling us what you've read
+                  <br className="hidden md:block" /> telling us what you&apos;ve read
                 </h2>
                 <Link href="/input-read-books">
                   <CustomButton minwidth="w-52" variant="outline" size="medium">
@@ -61,7 +61,7 @@ const MarketingPage = () => {
               </h2>
               <p className="text-gray-500 text-sm md:text-md lg:text-lg font-semibold text-center md:text-start">
                 BookMatch offers two unique paths to help you find your next
-                great read. Whether you prefer to tell us about books you've
+                great read. Whether you prefer to tell us about books you&apos;ve
                 enjoyed or rate a selection of books we show you, our advanced
                 recommendation system will find the perfect book for you.
               </p>

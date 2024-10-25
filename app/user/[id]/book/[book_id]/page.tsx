@@ -1,7 +1,7 @@
 // pages/book/[book_id].js
 "use client";
 import { useParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { BookCard } from '@/app/_components/users/BookCard/BookCard';
 
 import Image from "next/image";
@@ -89,8 +89,8 @@ const BookDetails = () => {
     }
   };
 
-  // Replace with your API endpoint to fetch book details
-  const fetchBookDetails = async () => {
+  // Wrap fetchBookDetails in useCallback
+  const fetchBookDetails = useCallback(async () => {
     try {
       const response = await fetch(`/api/book/${book_id}`, {
         method: 'POST',
@@ -112,13 +112,13 @@ const BookDetails = () => {
     } finally {
       setLoading(false);
     }
-  };
-  
+  }, [book_id, userId]); // Add dependencies here
+
   useEffect(() => {
     if (book_id) {
       fetchBookDetails();
     }
-  }, [book_id]);
+  }, [book_id, fetchBookDetails]); // Add fetchBookDetails to the dependency array
 
   useEffect(() => {
     const fetchSimilarBooks = async () => {
@@ -143,7 +143,7 @@ const BookDetails = () => {
       }
     };
     fetchSimilarBooks();
-  }, [book]);
+  }, [book, book_id]); // Add book_id to the dependency array
 
   if (loading) return <div>Loading...</div>;
   if (!book) return <div>No book found</div>;

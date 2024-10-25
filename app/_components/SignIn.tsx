@@ -63,7 +63,7 @@ export default function SignInPageComponent() {
         </div>
       </form>
       <p className="text-sm text-center text-gray-600">
-        Don't have an account?{" "}
+      Don&apos;t have an account?{" "}
         <Link
           href="/auth/signup"
           className="font-medium text-primary hover:text-primary-400"

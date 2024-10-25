@@ -97,12 +97,11 @@ const MatchOfTheDay = ({ title, author, genres, coverUrl, description, previewLi
                 <p className="text-gray-600 mt-2">
                     {description.length > 150 ? `${description.substring(0, 150)}...` : description}
                 </p>
-                {/* score 98 */}
                 {
                   (score ?? 0) > 0 && 
-                <p className="">
-                  We are <span className="text-green-400 font-semibold">{score && (score*100).toFixed(2)}%</span>   sure you'll like this!
-                </p>
+                  <p className="">
+                    We are <span className="text-green-400 font-semibold">{score && (score*100).toFixed(2)}%</span> sure you&apos;ll like this!
+                  </p>
                 }
                 {/* preview link */}
                 {

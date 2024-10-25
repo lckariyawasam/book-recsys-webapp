@@ -54,7 +54,7 @@ interface BookProps {
 }
 
 
-const page = () => {
+const RecommendationsPage = () => {
   
   const { id } = useParams();
   console.log("id", id)
@@ -64,7 +64,7 @@ const page = () => {
   
   
   useEffect(() => {
-    const recommendations = async () => {
+    const fetchRecommendations = async () => {
       const response = await fetch('/api/recommendations/', {
         method: 'POST',
         headers: {
@@ -82,9 +82,8 @@ const page = () => {
       console.log(data)
       setRecommendations(data)
     }
-    recommendations()
-  }
-  , [])
+    fetchRecommendations()
+  }, [id])  // Add 'id' to the dependency array
 
 
   return (
@@ -162,4 +161,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default RecommendationsPage;

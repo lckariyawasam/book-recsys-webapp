@@ -33,8 +33,7 @@ const ExplorePage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  // Function to fetch books from API
-  const fetchBooks = async () => {
+  const fetchBooks = useCallback(async () => {
     setLoading(true);
     setError('');
 
@@ -53,24 +52,32 @@ const ExplorePage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [searchQuery, selectedGenre, selectedSort]);
 
-  // Debounced fetch function
-  const debouncedFetchBooks = useCallback(
-    debounce(() => {
-      if (searchQuery.length >= 2) {
-        fetchBooks();
-      }
-    }, 2000),
-    [searchQuery, selectedGenre, selectedSort]
-  );
+  const debouncedFetchBooks = useCallback(() => {
+    let timeout: NodeJS.Timeout;
 
-  // Trigger the debounced API call whenever search, genre, or sort options change
+    const fetchBooksHandler = () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        if (searchQuery.length >= 2) {
+          fetchBooks();
+        }
+      }, 2000);
+    };
+
+    fetchBooksHandler.cancel = () => clearTimeout(timeout);
+
+    return fetchBooksHandler;
+  }, [searchQuery, fetchBooks]);
+
   useEffect(() => {
-    debouncedFetchBooks();
-    // Cleanup function to cancel the debounce on unmount
-    return () => debouncedFetchBooks.cancel();
-  }, [searchQuery, selectedGenre, selectedSort, debouncedFetchBooks]);
+    const fetchBooksHandler = debouncedFetchBooks();
+    fetchBooksHandler();
+    return () => {
+      fetchBooksHandler.cancel();
+    };
+  }, [debouncedFetchBooks]);
 
   return (
     <div className="space-y-5">
@@ -122,25 +129,5 @@ const ExplorePage = () => {
     </div>
   );
 };
-
-// Add this debounce function at the end of the file
-function debounce<F extends (...args: any[]) => any>(func: F, wait: number) {
-  let timeout: ReturnType<typeof setTimeout> | null = null;
-
-  const debounced = (...args: Parameters<F>) => {
-    if (timeout !== null) {
-      clearTimeout(timeout);
-    }
-    timeout = setTimeout(() => func(...args), wait);
-  };
-
-  debounced.cancel = () => {
-    if (timeout !== null) {
-      clearTimeout(timeout);
-    }
-  };
-
-  return debounced;
-}
 
 export default ExplorePage;

@@ -1,7 +1,8 @@
 import prisma from '@/prisma/prisma_client';
 import { NextResponse } from 'next/server';
+import { NextRequest } from 'next/server';
 
-export async function POST(req, res) {  
+export async function POST(req: NextRequest, res: NextResponse) {  
     // Get the book ID from the request body
     const { userId } = await req.json();
 
