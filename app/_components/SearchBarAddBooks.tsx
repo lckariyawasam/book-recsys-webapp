@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import CustomButton from '@/app/_components/Button';
+import { set } from 'zod';
 
 interface SearchBarAddBooksProps {
   handleBookAdd: (id: string, title: string, author: string) => void;
@@ -14,7 +15,9 @@ const SearchBarAddBooks: React.FC<SearchBarAddBooksProps> = ({ handleBookAdd, fi
   const [suggestions, setSuggestions] = useState<{ id: string, title: string, author: string, imageURL: string }[]>([]);
 
   const fetchSuggestions = useCallback(async (query: string) => {
-    if (query.length < 2) return; // Minimal length for triggering search
+    if (query.length < 2) {
+      setSuggestions([]); // Clear suggestions if the query is too short
+    }; // Minimal length for triggering search
     try {
       const response = await fetch(`/api/search?query=${query}&filterByRatings=${filterByRatings}`);
       const data = await response.json();
