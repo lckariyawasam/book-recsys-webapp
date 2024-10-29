@@ -61,10 +61,27 @@ const FinishedListPage = () => {
   }, [id])
 
 
+  const handleRemoveRating = async (bookId: string, userId: string) => {
+    const response = await fetch(`/api/rated/delete`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ "bookId": bookId, "userId": userId }),
+    });
+
+    // Remove the book from the list
+    const newBooks = books.filter(book => book.bookId !== bookId)
+    setBooks(newBooks)
+  
+    console.log("Removed from finished list")
+  }
+
+
   return (
     <div className="space-y-5">
         <div className="text-3xl font-medium text-gray-600">My Finished List</div>
-        <div className="border-l-2 border-t-2 p-3 rounded-md"><BooksTable books={books} userId={id} deleteCallback={null} /></div>
+        <div className="border-l-2 border-t-2 p-3 rounded-md"><BooksTable books={books} userId={id} deleteCallback={handleRemoveRating} /></div>
     </div>
   )
 }
