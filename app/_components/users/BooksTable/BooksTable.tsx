@@ -61,16 +61,18 @@ export function BooksTable({ books, userId, deleteCallback }: { books: any[], us
         </Anchor>
         </Link>
       </Table.Td>
+      {deleteCallback && 
       <Table.Td>
         <Group gap={0} justify="flex-end">
           {/* <ActionIcon variant="subtle" color="gray">
             <IconPencil style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
           </ActionIcon> */}
-          <ActionIcon variant="subtle" color="red" onClick={() => deleteCallback && deleteCallback(item.bookId, userId)}>
+          <ActionIcon variant="subtle" color="red" onClick={() => deleteCallback(item.bookId, userId)}>
             <IconTrash style={{ width: rem(16), height: rem(16) }} stroke={1.5} />
           </ActionIcon>
         </Group>
       </Table.Td>
+      }
     </Table.Tr>
   ));
 
