@@ -65,9 +65,11 @@ const MarketingPage = () => {
                 enjoyed or rate a selection of books we show you, our advanced
                 recommendation system will find the perfect book for you.
               </p>
-              <CustomButton minwidth="w-52" size="medium">
-                Find Similar
-              </CustomButton>
+              <Link href="/find-similar">
+                <CustomButton minwidth="w-52" size="medium">
+                  Find Similar
+                </CustomButton>
+              </Link>
             </div>
             <div className="relative col-span-1 md:col-span-1 flex flex-col justify-center items-center h-full w-full">
               <Image
