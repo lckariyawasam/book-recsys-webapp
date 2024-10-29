@@ -39,7 +39,7 @@ export function HeaderTabs() {
   const links = [
     { link: '/find-similar', label: 'Find Similar' },
     { link: '/input-read-books', label: 'Surprise Me' },
-    { link: '/faq', label: 'FAQ' },
+    { link: '/faqs', label: 'FAQ' },
     { link: '/contact-us', label: 'Contact Us' },
   ];
 

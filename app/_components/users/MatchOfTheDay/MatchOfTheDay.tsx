@@ -107,7 +107,7 @@ const MatchOfTheDay = ({ title, author, genres, coverUrl, description, previewLi
                 {
                   (score ?? 0) > 0 &&
                   <>
-                    <a href={`/user/${userId}/book/${bookid}`} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
+                    <a href={`/user/${userId}/book/${bookid}`} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">Read More</a>
                     <div className="flex space-x-4 mt-5">
                     <button onClick={addToWishlist}
                         disabled={isAddingWishlist}

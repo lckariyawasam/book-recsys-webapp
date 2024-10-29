@@ -36,6 +36,7 @@ const BookDetails = () => {
   const [isAddingWishlist, setIsAddingWishlist] = useState(false);
   const [clickedRating, setClickedRating] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [showFullDescription, setShowFullDescription] = useState(false);
 
   const userId = useParams().id;
 
@@ -153,7 +154,7 @@ const BookDetails = () => {
     <div>
        <div className="flex justify-between px-24 py-10 border-l-2 mt-10">
         {/* content on left side */}
-        <div className="flex flex-col justify-center items-start w-1/2 space-y-3">
+        <div className="flex flex-col justify-start items-start w-1/2 space-y-3">
             <p className="text-3xl font-semibold text-gray-900">{book.title}</p>
             <p className="text-lg text-gray-600 mt-2">{book.author}</p>
             <div className="flex flex-wrap justify-center sm:justify-start mt-2">
@@ -161,7 +162,19 @@ const BookDetails = () => {
                         {book.genres}
                   </span>
             </div>
-            <p className="text-gray-600 mt-2">{book.description}</p>
+            <div className="text-gray-600 mt-2">
+              {showFullDescription 
+                ? book.description
+                : book.description.split('.').slice(0, 5).join('.') + '.'}
+              {!showFullDescription && book.description.split('.').length > 5 && (
+                <button 
+                  onClick={() => setShowFullDescription(true)}
+                  className="text-blue-500 ml-2 hover:underline"
+                >
+                  Show more
+                </button>
+              )}
+            </div>
             {/* preview link */}
             <a href={book.previewLink} target="_blank" rel="noreferrer" className="text-blue-500 mt-2">View on Google Books</a>
             {/* Add a button with add to wishlist */}
@@ -194,7 +207,7 @@ const BookDetails = () => {
             </div>
         </div>
         {/* image on right side */}
-        <div className="flex justify-end items-center w-1/2">
+        <div className="flex justify-end items-start w-1/2">
             {book.imageURL && (
                 <Image src={book.imageURL} alt={book.title} width={300} height={450} className="rounded-md" unoptimized />
             )}
