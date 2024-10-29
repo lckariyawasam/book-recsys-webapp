@@ -82,7 +82,7 @@ const ExplorePage = () => {
   return (
     <div className="space-y-5">
       <div className="text-3xl font-semibold text-gray-600">Explore <span className="text-primary-300">Books</span></div>
-      <div className="border-l-2 border-t-2 p-3 rounded-md space-y-10">
+      <div className="shadow p-3 pb-5 rounded-md space-y-10">
         {/* Options */}
         <div className="flex justify-between border-b-2 p-3">
           {/* Search bar */}
